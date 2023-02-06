@@ -19,10 +19,34 @@ class GamesController extends Controller
     {
 
            // dump($latestReleasesGames);
+        return view('index',[
+            /* 'popularGames'=>$popularGames, */
+        ]);
+    }
 
-            return view('index',[
-                /* 'popularGames'=>$popularGames, */
-            ]);
+    public function browse()
+    {
+        $genresNames= ['Shooter','Adventure','Puzzle','Racing','Sports'];
+        $genresIds = [5, 31, 9, 10, 14];
+        $genreImgs=['/imgs/shooter.jpg','/imgs/adv.jpg','/imgs/puzzle.jpg','/imgs/racing.jpg','/imgs/sports.jpg',];
+        $genres=[
+        ['genreName'=>'Shooter','genreImg'=>'/imgs/shooter.jpg','genreId'=>5],
+        ['genreName'=>'Adventure','genreImg'=>'/imgs/adv.jpg','genreId'=>31],
+        ['genreName'=>'Puzzle','genreImg'=>'/imgs/Puzzle.jpg','genreId'=>9],
+        ['genreName'=>'Racing','genreImg'=>'/imgs/Racing.jpg','genreId'=>10],
+        ['genreName'=>'Sports','genreImg'=>'/imgs/Sports.jpg','genreId'=>14],
+    ];
+        return view('browse',[
+            /* 'genresInfo'=>$genres */
+        ]);
+    }   
+
+    
+
+    public function categoryGames($id){
+        return view('category_games',[
+           // 'genresInfo'=>$genres
+        ]);
 
     }
 

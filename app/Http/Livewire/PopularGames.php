@@ -25,7 +25,7 @@ class PopularGames extends Component
                 where category = (0,9) & platforms = (48)  & aggregated_rating>85 
                 &  first_release_date < '.$after.';
                 sort aggregated_rating desc;
-                limit 12;'
+                limit 8;'
             ]
             )->json();
         });
