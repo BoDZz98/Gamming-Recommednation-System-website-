@@ -14,7 +14,7 @@ class Categories extends Component
             ['genreName'=>'Adventure','genreImg'=>'/imgs/adv.jpg','genreId'=>31],
             ['genreName'=>'Puzzle','genreImg'=>'/imgs/Puzzle.jpg','genreId'=>9],
             ['genreName'=>'Racing','genreImg'=>'/imgs/Racing.jpg','genreId'=>10],
-            ['genreName'=>'Sports','genreImg'=>'/imgs/Sports.jpg','genreId'=>14],
+            ['genreName'=>'Sport','genreImg'=>'/imgs/Sports.jpg','genreId'=>14],
         ];
     }
     public function render()

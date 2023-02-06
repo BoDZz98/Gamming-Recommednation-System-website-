@@ -19,16 +19,19 @@
                     <!-- <img src="/settings.png" alt="logo" class="w-28 h-8 flex-none"> -->
                     <h2 class="text-purple-600 text-3xl font-extrabold font-sans"> Gamer's Guide</h2>
                 </a>
-                <ul class="flex ml-0 lg:ml-16 space-x-8 mt-6 lg:mt-0">
-                    <li> <a href="#" class="hover:text-gray-400">Games</a></li> 
-                    <li> <a href="#" class="hover:text-gray-400">Reviews</a></li> 
-                    <li> <a href="#" class="hover:text-gray-400">comming Soon</a></li> 
+                <ul class="flex ml-0 lg:ml-16 space-x-8 ">
+                    <li class="mt-6 lg:mt-2"> <a href="{{route( 'games.index') }}" class=" hover:text-gray-400">Home</a></li> 
+                    <li class="mt-6 lg:mt-2"> <a href="{{route( 'games.browse') }}" class=" hover:text-gray-400">Browse</a></li> 
+                    <li class="mt-6 lg:mt-2"> <a href="#" class="hover:text-gray-400">comming Soon</a></li> 
+                    <li > <a href="{{route( 'profile.index') }}" class="mt-6 lg:mt-0 ">
+                       <div class="flex flex-row p-2 bg-gray-700 text-gray-500 rounded-xl hover:bg-purple-500 hover:text-white transition ease-in-out duration-300"> profile <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-8 ml-3"> </div> 
+                    </a></li> 
                 </ul>
             </div>
             <div class="flex items-center mt-6 lg:mt-0">
             @livewire('search-dropdown') 
                 <div class="ml-6">
-                    <a href="#"> <img src="/avatar.png" alt="avatar" class="rounded-full w-8"></a>
+                    <a href="#"> <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-8"></a>
                 </div>
             </div>
         </nav>

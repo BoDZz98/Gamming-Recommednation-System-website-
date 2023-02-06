@@ -26,16 +26,6 @@ class GamesController extends Controller
 
     public function browse()
     {
-        $genresNames= ['Shooter','Adventure','Puzzle','Racing','Sports'];
-        $genresIds = [5, 31, 9, 10, 14];
-        $genreImgs=['/imgs/shooter.jpg','/imgs/adv.jpg','/imgs/puzzle.jpg','/imgs/racing.jpg','/imgs/sports.jpg',];
-        $genres=[
-        ['genreName'=>'Shooter','genreImg'=>'/imgs/shooter.jpg','genreId'=>5],
-        ['genreName'=>'Adventure','genreImg'=>'/imgs/adv.jpg','genreId'=>31],
-        ['genreName'=>'Puzzle','genreImg'=>'/imgs/Puzzle.jpg','genreId'=>9],
-        ['genreName'=>'Racing','genreImg'=>'/imgs/Racing.jpg','genreId'=>10],
-        ['genreName'=>'Sports','genreImg'=>'/imgs/Sports.jpg','genreId'=>14],
-    ];
         return view('browse',[
             /* 'genresInfo'=>$genres */
         ]);
@@ -43,11 +33,29 @@ class GamesController extends Controller
 
     
 
-    public function categoryGames($id){
-        return view('category_games',[
-           // 'genresInfo'=>$genres
+    public function categoryGames($name){
+        $games=Http::withHeaders(config('services.igdb'))
+        ->send('POST', 'https://api.igdb.com/v4/games?', 
+        [
+            'body' => "fields name , cover.url , first_release_date , platforms.abbreviation , rating , aggregated_rating,slug;
+            where genres.name=\"{$name}\";" 
+        ]
+        )->json();
+        return view('category',[
+            'categoryGames'=>$this->clean($games),
+            'categoryname'=>$name,
         ]);
 
+    }
+
+    private function clean($games){
+        return collect($games)->map(function($game){
+            return collect($game)->merge([
+                'coverImageUrl'=>Str::replaceFirst('thumb','cover_big', $game['cover']['url']),
+                'rating'=>isset($game['rating'])?round($game['rating']).'%':null,
+                'platforms'=>collect($game['platforms'])->pluck('abbreviation')->implode(', ')
+            ]);
+        })->toArray();
     }
 
     /**
