@@ -22,10 +22,7 @@
             @livewire('categories') 
             
         </div>
-    </div>
-
-    
-    
+    </div>  
 </div>
 
 @endsection
