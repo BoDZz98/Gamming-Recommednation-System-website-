@@ -1,7 +1,7 @@
-<div wire:init="loadPopularGames" class="popular-games text-sm grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3   gap-12 border-b border-gray-800 pb-16">
+<div wire:init="loadRecommendedGames" class="popular-games text-sm grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4  gap-12 border-b border-gray-800 pb-16">
     <!-- Single game card --> <!-- wire:init="loadPopularGames" -->
-    @forelse($popularGames as $game)
-        <div class="game mt-8 w-fit">  
+    @forelse($recommendedGames as $game)
+        <div class="game mt-8 bg-gray-900 p-8 rounded-xl w-60">  
             <div class="relative inline-block w-52">
                 <a href="{{ route( 'games.show',$game['slug'] ) }}">
                     <img src="{{ $game['coverImageUrl'] }}" alt="Game Cover" class=" h-60 rounded-lg w-44 hover:opacity-75 transition ease-in-out duration-150">
@@ -21,7 +21,7 @@
         </div>
     @empty
    @foreach(range(1,8) as $game)
-    <div class="game mt-8  w-60">  
+    <div class="game mt-8 bg-gray-900 p-8 rounded-xl w-60">  
         <div class="relative inline-block ">
             <div class=" bg-gray-700 w-44 h-56 "></div>
         </div>

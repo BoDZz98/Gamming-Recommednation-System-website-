@@ -4,7 +4,12 @@ module.exports = {
   "./resources/**/*.js",
   "./resources/**/*.vue",],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'adv': "url('/imgs/adv.jpg')",
+        
+      }
+    },
     spinner: (theme) => ({
       default: {
         color: '#dae1e7', // color you want to make the spinner

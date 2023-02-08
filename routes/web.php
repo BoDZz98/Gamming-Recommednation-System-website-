@@ -2,11 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GamesController;
+use App\Http\Controllers\ProfileController;
 
-/* for searching for file -> ctrl+p 
-   IGDb acces token is in the .env file and services.php
+/* 
+    for searching for file -> ctrl+p 
+
+    IGDb acces token is in the .env file and services.php
 
     php artisan make:livewire popular-games
+
+    php artisan make:controller PhotoController -r
 
     where slug=\"{$slug}\";" 
 
@@ -37,5 +42,10 @@ use App\Http\Controllers\GamesController;
 */
 
 Route::get('/',[GamesController::class,'index'])->name('games.index');
+Route::get('/browse',[GamesController::class,'browse'])->name('games.browse');
+
 Route::get('/games/{slug}',[GamesController::class,'show'])->name('games.show');
+Route::get('/category/{name}',[GamesController::class,'categoryGames'])->name('games.categoryGames');
+
+Route::get('/profile',[ProfileController::class,'index'])->name('profile.index');
 
