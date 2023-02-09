@@ -47,5 +47,9 @@ Route::get('/browse',[GamesController::class,'browse'])->name('games.browse');
 Route::get('/games/{slug}',[GamesController::class,'show'])->name('games.show');
 Route::get('/category/{name}',[GamesController::class,'categoryGames'])->name('games.categoryGames');
 
-Route::get('/profile',[ProfileController::class,'index'])->name('profile.index');
+Route::get('/profile/overview',[ProfileController::class,'index'])->name('profile.index');
+Route::get('/profile/favorites',[ProfileController::class,'favorites'])->name('profile.favorites');
+Route::get('/profile/wishlist',[ProfileController::class,'wishlist'])->name('profile.wishlist');
+Route::get('/profile/comments',[ProfileController::class,'comments'])->name('profile.comments');
+Route::get('/profile/lists',[ProfileController::class,'lists'])->name('profile.lists');
 

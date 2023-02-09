@@ -5,7 +5,7 @@
     <div class="game-details border-b border-gray-800 pb-16 flex flex-col lg:flex-row">
         
         <div class="flex-none ">
-            <img src="{{ $game['coverImageUrl'] }}" alt="game cover" class="w-64 h-30  rounded-lg "><!-- no W and H -->
+            <img src="{{ $game['coverImageUrl'] }}" alt="game cover" class=" rounded-lg "><!-- no W and H -->
         </div>
         
         <div class="mt-10 lg:mt-0 lg:ml-12 lg:mr-64">
