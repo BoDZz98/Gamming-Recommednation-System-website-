@@ -14,9 +14,9 @@
                 <span class="text-4xl font-bold " >User name</span>
                 <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-12  ml-5">
             </div>
-            <a href="#" class="bg-purple-500 rounded-lg py-3 px-3 h-12 font-semibold" >Settings</a>
+            <a href="{{route( 'settings.index') }}" class="bg-purple-500 rounded-lg py-3 px-3 h-12 font-semibold" >Settings</a>
         </div>
-
+        
         <div class="bg-gray-900 rounded-3xl mx-10 lg:mx-20">
             <nav class="container mx-auto flex items-center justify-between border-b-4 border-gray-800 px-4 py-6 flex-col lg:flex-row ">
                 <div class="flex flex-col items-center lg:flex-row">

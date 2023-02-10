@@ -24,7 +24,7 @@
                 <ul class="flex ml-0 lg:ml-16 space-x-8 ">
                     <li class="mt-6 lg:mt-2"> <a href="{{route( 'games.index') }}" class=" hover:text-gray-400">Home</a></li> 
                     <li class="mt-6 lg:mt-2"> <a href="{{route( 'games.browse') }}" class=" hover:text-gray-400">Browse</a></li> 
-                    <li class="mt-6 lg:mt-2"> <a href="#" class="hover:text-gray-400">comming Soon</a></li> 
+                    <li class="mt-6 lg:mt-2"> <a href="{{route( 'settings.index') }}" class="hover:text-gray-400">Settings</a></li> 
                     <li > <a href="{{route( 'profile.index') }}" class="mt-6 lg:mt-0 ">
                        <div class="flex flex-row p-2 bg-gray-700 text-gray-500 rounded-xl hover:bg-purple-500 hover:text-white transition ease-in-out duration-300"> profile <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-8 ml-3"> </div> 
                     </a></li> 
