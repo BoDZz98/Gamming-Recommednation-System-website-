@@ -112,7 +112,7 @@ class GamesController extends Controller
             'aggregated_rating'=>isset($game['aggregated_rating'])?round($game['aggregated_rating']).'%':'0%',
             'genres'=>collect($game['genres'])->pluck('name')->implode(', '),
             'platforms'=>isset($game['platforms'])?collect($game['platforms'])->pluck('abbreviation')->implode(', '):null,
-            
+            'first_release_date'=>Carbon::parse ($game['first_release_date'])->format('M d,Y'),
             'similarGames'=>collect($game['similar_games'])->map(function ($oneSimilarGame){
                 return collect($oneSimilarGame)->merge([
                     'similarGamesCover'=>isset($oneSimilarGame['cover'])?
@@ -122,8 +122,19 @@ class GamesController extends Controller
                     'similarGamesPlatforms'=>isset($oneSimilarGame['platforms'])?
                     collect($oneSimilarGame['platforms'])->pluck('abbreviation')->implode(', '):null,
                 ]);
-            })->take(6)
-            
+            })->take(6),
+            'social'=>[
+                'website'=>collect($game['websites'])->first(),
+                'facebook'=>collect($game['websites'])->filter(function ($website){
+                    return str::contains($website['url'],'facebook');
+                })->first(),
+                'twitter'=>collect($game['websites'])->filter(function ($website){
+                    return str::contains($website['url'],'twitter');
+                })->first(),
+                'instagram'=>collect($game['websites'])->filter(function ($website){
+                    return str::contains($website['url'],'instagram');
+                })->first(),
+            ]
 
         ]);
         //dd($temp);

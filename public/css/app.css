@@ -25,24 +25,48 @@ SVG Icons - svgicons.sparkk.fr
   }
   /* ------------------------------------------------------------------- */
 
+ 
+
+
+
   /* -----
-SVG Icons - svgicons.sparkk.fr
+SVG Icons - arrow down / Fav / Wishlist
+----- */
+
+.svg-icon-2 {
+  width: 2em;
+  height: 2em;
+}
+
+.svg-icon-2 path,
+.svg-icon-2 polygon,
+.svg-icon-2 rect {
+  fill: #ffffff;
+}
+
+.svg-icon-2 circle {
+  stroke: #ffffff;
+  stroke-width: 1;
+}
+
+
+/* -----
+SVG Icons - Facebook / twitter / Instagram
 ----- */
 
 .svg-icon {
-    width: 2em;
-    height: 2em;
-   
-  }
-  
-  .svg-icon path,
-  .svg-icon polygon,
-  .svg-icon rect {
-    fill: #ffffff;
-    
-  }
-  
-  .svg-icon circle {
-    stroke: #4691f6;
-    stroke-width: 1;
-  }
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: #ffffff;
+}
+
+.svg-icon circle {
+  stroke: #ffffff;
+  stroke-width: 1;
+}
+
