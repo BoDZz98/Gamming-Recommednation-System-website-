@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-<div class="bg-gray-900 px-56 flex flex-col items-center">
+<div class="bg-gray-900 px-32 lg:px-56 flex flex-col items-center">
     <p class="text-4xl tracking-wide font-extrabold  "> Settings</p>
     <nav class=" flex  py-6 lg:flex-row ">
         <div class=" flex items-center lg:flex-row">

@@ -1,8 +1,8 @@
 @extends('layouts.profile')
 @section('content2')
-<!-- overview -->
+<!-- overview  md:ml-16 lg:ml-20 xl:ml-40 gap-y-10  -->
 <p class="text-2xl tracking-wide text-purple-500 font-extrabold p-7 ">Overview</p>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-5 ml-40 mb-10">
+<div class="bg-red-500 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-5 px-7  mb-10">
     <div class="w-52 h-72  rounded-lg bg-purple-300 px-5 pt-52">
         <p class="text-lg font-semibold underline">FAVORITE GAMES</p>
         <p class="text-s">Games: 12</p>
