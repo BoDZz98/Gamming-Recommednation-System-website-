@@ -95,12 +95,35 @@
 
             <p class="mt-12"> {{$game['summary']}}</p>
              
-            <div class="mt-12 flex ">
-                <a href="https://www.youtube.com/watch/{{$game['videos'][0]['video_id']}}" class="inline-flex bg-purple-600 rounded-lg text-white font-semibold px-4 py-4 hover:bg-purple-800 transition ease-in-out duration-150">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16"> <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"/> </svg>
-                   <span class=" ml-2">Play Trailer</span> 
-                </a>
-
+            <div class="mt-12 flex" x-data="{ isTrailerModalVisible:false }">
+                <button class="inline-flex bg-purple-600 rounded-lg text-white font-semibold px-4 py-4 hover:bg-purple-800 transition ease-in-out duration-150"
+                @click="isTrailerModalVisible = true">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16"> <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"/> </svg>
+                    <h1 class=" ml-2">Play Trailer</h1> 
+                </button>
+                <!-- trailer model here  -->
+                <template x-if="isTrailerModalVisible">
+                    <div style="background-color: rgba(0, 0, 0, .5);" class="z-50 fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto">
+                        <div class="container mx-auto lg:px-32 rounded-lg overflow-y-auto">
+                            <div class="bg-gray-900 rounded">
+                                <div class="flex justify-end pr-4 pt-2">
+                                    <button
+                                        @click="isTrailerModalVisible = false"
+                                        @keydown.escape.window="isTrailerModalVisible = false"
+                                        class="text-3xl leading-none hover:text-gray-300"
+                                    >
+                                        &times;
+                                    </button>
+                                </div>
+                                <div class="modal-body px-8 py-8">
+                                    <div class="responsive-container overflow-hidden relative" style="padding-top: 56.25%">
+                                        <iframe width="560" height="315" class="responsive-iframe absolute top-0 left-0 w-full h-full" src="{{ $game['trailer'] }}" style="border:0;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </template>
                 <!-- Dropdown button -->
                 <button class="ml-4 relative flex justify-center items-center bg-purple-600 hover:bg-purple-800 border font-semibold focus:outline-none shadow-lg text-white rounded-lg hover:ring ring-white group">
                     <p class="px-4 ">Add To Collections</p>
@@ -118,21 +141,52 @@
                 </button>
             </div>
         </div>
+       
     </div> <!--  End game Details -->
 
-    <div class="images-container my-8 py-10 border-y-2 border-gray-800 ">
+    <div class="images-container my-8 py-10 border-y-2 border-gray-800 "
+    x-data="{ isImageModalVisible: false , image:''}">
         <span class=" uppercase underline text-2xl tracking-wide font-extrabold">Images</span>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-8">
             <!-- One Image -->
             @foreach($game['screenshots'] as $oneScreenshot)
             <div >
-                <a href="{{ Str::replaceFirst('thumb','screenshot_huge', $oneScreenshot['url']) }}" >
-                    <img src="{{ Str::replaceFirst('thumb','screenshot_big', $oneScreenshot['url']) }}" alt="screenshots" class="  rounded-lg hover:opacity-75 transition ease-in-out duration-150">
+                <a href="#" 
+                @click.prevent="
+                    isImageModalVisible=true
+                    image='{{  $oneScreenshot['huge'] }}'
+                "
+                >
+                    <img src="{{ $oneScreenshot['big'] }}" alt="screenshots" class="  rounded-lg hover:opacity-75 transition ease-in-out duration-150">
                 </a>
             </div> 
             @endforeach
         </div>
+         <!-- Images model here -->
+         <template x-if="isImageModalVisible">
+            <div
+                style="background-color: rgba(0, 0, 0, .5);"
+                class="z-50 fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto"
+            >
+                <div class="container mx-auto lg:px-32 rounded-lg overflow-y-auto">
+                    <div class="bg-gray-900 rounded">
+                        <div class="flex justify-end pr-4 pt-2">
+                            <button
+                                class="text-3xl leading-none hover:text-gray-300"
+                                @click="isImageModalVisible = false"
+                                @keydown.escape.window="isImageModalVisible = false"
+                            >
+                                &times;
+                            </button>
+                        </div>
+                        <div class="modal-body px-8 py-8">
+                            <img :src="image" alt="screenshot">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
     </div> <!-- End images container -->
 
     <div class="similar-games-container border-gray-800 pb-12 mt-8 bg-gray-800 rounded-3xl p-12">

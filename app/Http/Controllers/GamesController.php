@@ -113,6 +113,13 @@ class GamesController extends Controller
             'genres'=>collect($game['genres'])->pluck('name')->implode(', '),
             'platforms'=>isset($game['platforms'])?collect($game['platforms'])->pluck('abbreviation')->implode(', '):null,
             'first_release_date'=>Carbon::parse ($game['first_release_date'])->format('M d,Y'),
+            'trailer' => 'https://youtube.com/embed/'.$game['videos'][0]['video_id'],
+            'screenshots'=>collect($game['screenshots'])->map(function($oneScreenshot){
+                return [
+                    'big'=>Str::replaceFirst('thumb','screenshot_big', $oneScreenshot['url']),
+                    'huge'=>Str::replaceFirst('thumb','screenshot_huge', $oneScreenshot['url']),
+                ];
+            }),
             'similarGames'=>collect($game['similar_games'])->map(function ($oneSimilarGame){
                 return collect($oneSimilarGame)->merge([
                     'similarGamesCover'=>isset($oneSimilarGame['cover'])?

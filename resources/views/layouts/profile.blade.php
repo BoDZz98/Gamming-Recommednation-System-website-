@@ -14,7 +14,7 @@
                 <span class="text-4xl font-bold " >User name</span>
                 <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-12  ml-5">
             </div>
-            <a href="{{route( 'settings.index') }}" class="bg-purple-500 rounded-lg py-3 px-3 h-12 font-semibold" >Settings</a>
+            <a href="{{route( 'settings.index') }}" class=" rounded-lg py-3 px-3 h-12 font-semibold bg-purple-600 hover:bg-purple-800" >Settings</a>
         </div>
         
         <div class="bg-gray-900 rounded-3xl mx-10 lg:mx-20">

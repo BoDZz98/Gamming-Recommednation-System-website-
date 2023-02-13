@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ asset( 'css/main.css' ) }}">
     <link rel="stylesheet" href="{{ url('css/app.css')}}" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600,800,900" rel="stylesheet" type="text/css">
-    
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     @livewireStyles
     <title>Gamer's Guide</title>
@@ -28,7 +28,7 @@
                     <li class="md:mt-4 lg:mt-0"> <a href="{{route( 'profile.index') }}" class="mt-6 lg:mt-0 ">
                        <div class="flex flex-row p-2 bg-gray-700 text-gray-500 rounded-xl hover:bg-purple-500 hover:text-white transition ease-in-out duration-300"> profile <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-8 ml-3"> </div> 
                     </a></li> 
-                </ul>
+                </ul> 
             </div>
             <div class="flex items-center mt-6 lg:mt-0">
             @livewire('search-dropdown') 

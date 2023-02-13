@@ -1,12 +1,26 @@
-<div class="relative">
-    <input wire:model.debounce.300ms="search" type="text" class="bg-gray-800 text-sm rounded-full pl-8 focus:outline-none focus: px-3 py-1 w-64" placeholder="search...">
-   
+<div class="relative" x-data="{ isVisible: true }" @click.away="isVisible = false">
+    <input wire:model.debounce.300ms="search" 
+    type="text" 
+    class="bg-gray-800 text-sm rounded-full pl-8 focus:outline-none focus: px-3 py-1 w-64" 
+    placeholder="search (Press '/' to focus)"
+    x-ref="search"
+    @keydown.window="
+        if(event.keyCode==191){
+            event.preventDefault();
+            $refs.search.focus();
+        }
+    "
+    @focus="isVisible = true"
+    @keydown.escape.window="isVisible = false"
+    @keydown="isVisible = true">
+    
     <div class="absolute top-0 flex items-center h-full ml-2">
-    <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-search w-4 h-4" viewBox="0 0 16 16"> <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/> </svg>
-    <div class="spinner ml-56 top-0 mt-3" style="position: absolute" wire:loading ></div>
+        <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-search w-4 h-4" viewBox="0 0 16 16"> <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/> </svg>
+        <div class="spinner ml-56 top-0 mt-3" style="position: absolute" wire:loading ></div>
     </div>
+   
     @if(strlen($search >=3))
-        <div class="absolute z-50 bg-gray-800 text-xs rounded w-64 mt-2">
+        <div class="absolute z-50 bg-gray-800 text-xs rounded w-64 mt-2" x-show.transition.opacity.duration.500="isVisible">
             @if(count($searchResult)==0)
                 <div class="px-3 py-3">
                     No results for "{{$search}}"
@@ -24,7 +38,7 @@
                                 <span class="ml-4">{{$oneResult['name']}}</span>
                             </a>
                         </li>
-                @endforeach  
+                    @endforeach  
                 </ul>
             @endif
         </div>
