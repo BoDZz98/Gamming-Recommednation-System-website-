@@ -1,4 +1,7 @@
 import './bootstrap';
 
-import ProgressBar from 'progressbar.js';
-window.ProgressBar =ProgressBar;
+import Alpine from 'alpinejs';
+
+window.Alpine = Alpine;
+
+Alpine.start();

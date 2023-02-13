@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GamesController;
 use App\Http\Controllers\ProfileController;
+
 use App\Http\Controllers\SettingsController;
 
 /* 
@@ -22,27 +23,14 @@ use App\Http\Controllers\SettingsController;
 
     https://via.placeholder.com/264x352
 
-*/
-
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-/* Route::get('/', function () {
-    return view('index');
-});
+    {{ Auth::user()->name }}
 
 */
 
-Route::get('/',[GamesController::class,'index'])->name('games.index');
+
+Route::redirect(uri:'/',destination:'login');
+
+Route::get('/home',[GamesController::class,'index'])->name('games.index');
 Route::get('/browse',[GamesController::class,'browse'])->name('games.browse');
 
 Route::get('/games/{slug}',[GamesController::class,'show'])->name('games.show');
@@ -59,3 +47,15 @@ Route::get('/settings',[SettingsController::class,'index'])->name('settings.inde
 Route::get('/email',[SettingsController::class,'email'])->name('settings.email');
 Route::get('/password',[SettingsController::class,'password'])->name('settings.password');
 
+
+Route::get('/dashboard', function () {
+    return view('index');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
