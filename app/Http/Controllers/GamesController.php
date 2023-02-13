@@ -90,9 +90,7 @@ class GamesController extends Controller
         $game=Http::withHeaders(config('services.igdb'))
             ->send('POST', 'https://api.igdb.com/v4/games?', 
             [
-                'body' => "fields name , genres.name , rating , summary , first_release_date,aggregated_rating,
-                involved_companies.company.name, platforms.abbreviation , slug , websites.* ,
-                cover.url , screenshots.url , videos.video_id , similar_games.cover.url,similar_games.name,
+                'body' => "fields screenshots.url , videos.video_id , similar_games.cover.url,similar_games.name,
                 similar_games.rating , similar_games.platforms.abbreviation , similar_games.slug ;
                 where slug=\"{$slug}\";" 
             ]
@@ -102,18 +100,12 @@ class GamesController extends Controller
         abort_if(!$game,404); 
 
         return view('show',[
+            'slug'=>$slug,
             'game'=>$this->cleanView($game[0]),
         ]);
     }
     private function cleanView($game){
         $temp=collect($game)->merge([
-            'coverImageUrl'=>Str::replaceFirst('thumb','cover_big', $game['cover']['url']),
-            'rating'=>isset($game['rating'])?round($game['rating']).'%':'0%',
-            'aggregated_rating'=>isset($game['aggregated_rating'])?round($game['aggregated_rating']).'%':'0%',
-            'genres'=>collect($game['genres'])->pluck('name')->implode(', '),
-            'platforms'=>isset($game['platforms'])?collect($game['platforms'])->pluck('abbreviation')->implode(', '):null,
-            'first_release_date'=>Carbon::parse ($game['first_release_date'])->format('M d,Y'),
-            'trailer' => 'https://youtube.com/embed/'.$game['videos'][0]['video_id'],
             'screenshots'=>collect($game['screenshots'])->map(function($oneScreenshot){
                 return [
                     'big'=>Str::replaceFirst('thumb','screenshot_big', $oneScreenshot['url']),
@@ -130,19 +122,7 @@ class GamesController extends Controller
                     collect($oneSimilarGame['platforms'])->pluck('abbreviation')->implode(', '):null,
                 ]);
             })->take(6),
-            'social'=>[
-                'website'=>collect($game['websites'])->first(),
-                'facebook'=>collect($game['websites'])->filter(function ($website){
-                    return str::contains($website['url'],'facebook');
-                })->first(),
-                'twitter'=>collect($game['websites'])->filter(function ($website){
-                    return str::contains($website['url'],'twitter');
-                })->first(),
-                'instagram'=>collect($game['websites'])->filter(function ($website){
-                    return str::contains($website['url'],'instagram');
-                })->first(),
-            ]
-
+            
         ]);
         //dd($temp);
         return $temp;

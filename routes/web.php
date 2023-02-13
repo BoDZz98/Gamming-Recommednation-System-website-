@@ -25,6 +25,16 @@ use App\Http\Controllers\SettingsController;
 
     {{ Auth::user()->name }}
 
+    @livewire('upper-part' , ['slug' => $slug])
+
+    <!-- @if($game['platforms'])
+                        @foreach($oneGame['platforms'] as $platform)
+                            @if(array_key_exists('abbreviation',$platform))
+                                {{$platform['abbreviation']}},
+                            @endif
+                        @endforeach 
+                    @endif -->
+
 */
 
 
