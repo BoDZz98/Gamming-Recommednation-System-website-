@@ -1,8 +1,8 @@
-<div>
+<div wire:init="loadMiddlePart">
     <div class="images-container my-8 py-10 border-y-2 border-gray-800 "
         x-data="{ isImageModalVisible: false , image:''}">
         <span class=" uppercase underline text-2xl tracking-wide font-extrabold">Images</span>
-
+        @forelse($middlePart as $game)
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-8">
             <!-- One Image -->
             @foreach($game['screenshots'] as $oneScreenshot)
@@ -42,5 +42,16 @@
                 </div>
             </div>
         </template>
+        @empty
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 mt-8">
+            <!-- One Image -->
+            @foreach( range(1,6) as $oneScreenshot)
+            <div class="h-64 rounded-lg bg-gray-600  ">
+                
+            </div> 
+            @endforeach
+        </div>
+
+        @endforelse
     </div> 
 </div>

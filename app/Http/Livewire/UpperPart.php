@@ -18,8 +18,7 @@ class UpperPart extends Component
     {
         $gameSlug=$this->slug;
         //dd($gameSlug);
-        $detailsPartCleaned  = Cache::remember('upper-part', 0, function () use($gameSlug){
-            return Http::withHeaders(config('services.igdb'))
+        $detailsPartCleaned  = Http::withHeaders(config('services.igdb'))
             ->send('POST', 'https://api.igdb.com/v4/games?', 
             [
                 'body' => "fields name , genres.name , rating , summary , first_release_date,aggregated_rating,
@@ -28,13 +27,13 @@ class UpperPart extends Component
                 where slug=\"{$gameSlug}\";" 
             ]
             )->json();
-        });/* mini-metro */
+       
          
         //dump($this->cleanView($detailsPartCleaned[0]));
         
         $this->detailsPart =$this->cleanView($detailsPartCleaned);
-       //dump($this->detailsPart['coverImageUrl']);
-        /* {{$detailsPart['coverImageUrl']}} */
+        //dump($this->detailsPart['coverImageUrl']);
+        //{{$detailsPart['coverImageUrl']}}
     }
 
     public function render()

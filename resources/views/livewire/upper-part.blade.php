@@ -141,8 +141,35 @@
         </div>
        
     </div> <!--  End game Details -->
+    
     @empty
-        <h1>loading</h1>
+    <div class="game-details p-16 bg-gray-800 rounded-3xl border-b border-gray-800 flex flex-col lg:flex-row">
+        
+        <div class="flex-none ">
+            <div class="w-56 h-72 rounded-lg bg-gray-600 "></div>
+            <p class="mt-4 rounded p-3 bg-gray-900 text-transparent w-56">May 20 , 2001</p>
+        </div>
+        
+        <div class="mt-10 lg:mt-0 lg:ml-12 lg:mr-64">
+            <h2 class="text-transparent text-4xl bg-gray-900 py-2 px-8 rounded-lg w-full lg:w-fit">game Name goes here </h2>
+            
+            <div class=" mt-8 text-transparent bg-gray-900 rounded-xl p-4 w-full">           
+                <h1> Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, deserunt! Lorem ipsum dolor sit amet consectetur adipisicing </h1>            
+            </div>
+
+            <div class="mt-8 space-y-4 hidden lg:block ">
+                <span class="text-transparent bg-gray-700 rounded inline-block">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, deserunt! Lorem ipsum dolor sit amet consectetur theeee </span>
+                <span class="text-transparent bg-gray-700 rounded inline-block">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, deserunt! Lorem ipsum dolor sit amet consectetur theeee</span>
+                <span class="text-transparent bg-gray-700 rounded inline-block">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, deserunt! Lorem ipsum dolor sit amet consectetur theeee</span>
+            </div>
+             
+            <div class="mt-12 flex">
+                <div class="px-4 py-4 bg-gray-700 rounded-lg text-transparent">Button Here</div>
+                <div class="px-4 py-4 ml-4 bg-gray-700 rounded-lg text-transparent">Add To Collections </div>
+            </div>
+        </div>
+       
+    </div> 
 
     @endforelse
 </div>

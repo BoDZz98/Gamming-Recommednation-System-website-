@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -106,12 +105,6 @@ class GamesController extends Controller
     }
     private function cleanView($game){
         $temp=collect($game)->merge([
-            'screenshots'=>collect($game['screenshots'])->map(function($oneScreenshot){
-                return [
-                    'big'=>Str::replaceFirst('thumb','screenshot_big', $oneScreenshot['url']),
-                    'huge'=>Str::replaceFirst('thumb','screenshot_huge', $oneScreenshot['url']),
-                ];
-            }),
             'similarGames'=>collect($game['similar_games'])->map(function ($oneSimilarGame){
                 return collect($oneSimilarGame)->merge([
                     'similarGamesCover'=>isset($oneSimilarGame['cover'])?
