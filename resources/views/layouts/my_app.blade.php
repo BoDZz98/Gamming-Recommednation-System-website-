@@ -30,9 +30,36 @@
                     </ul> 
                 </div>
                 <div class="flex items-center mt-6 lg:mt-0">
-                @livewire('search-dropdown') 
+                    @livewire('search-dropdown') 
+                    <!-- Logo dropdown -->
                     <div class="ml-6">
-                        <a href="#"> <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-8"></a>
+                        <x-dropdown align="right" width="48">
+                            <!-- The Logo itself -->
+                            <x-slot name="trigger">
+                                <a href="#"> <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-8"></a>
+                            </x-slot>
+                            <!-- content of dropdown -->
+                            <x-slot name="content">
+                                <x-dropdown-link :href="route('profile.index')"> <!-- route('profile.edit') -->
+                                    {{ __('My Profile') }}
+                                </x-dropdown-link>
+
+                                <x-dropdown-link :href="route('settings.index')"> 
+                                    {{ __('Settings') }}
+                                </x-dropdown-link>
+
+                                <!-- Authentication -->
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+
+                                    <x-dropdown-link :href="route('logout')"
+                                            onclick="event.preventDefault();
+                                                        this.closest('form').submit();">
+                                        {{ __('Log Out') }}
+                                    </x-dropdown-link>
+                                </form>
+                            </x-slot>
+                        </x-dropdown>
                     </div>
                 </div>
             </nav>
