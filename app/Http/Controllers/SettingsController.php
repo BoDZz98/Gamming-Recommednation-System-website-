@@ -11,9 +11,11 @@ class SettingsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('settings.index');
+        return view('settings.index', [
+            'user' => $request->user(),
+        ]);
     }
 
     public function email()
