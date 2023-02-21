@@ -15,6 +15,10 @@ use App\Http\Controllers\SettingsController;
 
     php artisan make:controller PhotoController -r
 
+    php artisan make:model small_letters_table -m
+
+    php artisan migrate
+
     where slug=\"{$slug}\";" 
 
     platforms id [48=ps4 , 6=pc, 49=xbox one ,]   abbreviation
