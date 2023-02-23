@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('fav_games_tables', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->integer('user_id');
+        Schema::create('fav_games', function (Blueprint $table) {
+            
+            $table->unsignedBigInteger('user_id');
             $table->integer('game_id');
+            $table->timestamps();
+            $table->primary(['user_id', 'game_id']);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fav_games_tables');
+        Schema::dropIfExists('fav_games');
     }
 };

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
+use App\Models\user_lists_table;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +15,19 @@ class ProfileController extends Controller
 {
 
     public function index(){
+        //testing
+        /* user_lists_table::create([
+            'list_id'=>300,
+            'user_id' => 1,
+            'list_name' => 'list 1',
+            'list_description' => 'this is list one',
+            'list_image_path' => '0',
+            
+        ]); */
+
+        $user=User::find(Auth::user()->id);
+        $lists=$user->lists;
+        dump($user);
         return view('profile.overview');
     }
 

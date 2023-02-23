@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class fav_games_table extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'game_id',
+    ];
+
 }

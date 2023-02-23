@@ -13,12 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_lists_tables', function (Blueprint $table) {
+        Schema::create('user_lists', function (Blueprint $table) {
             $table->integer('list_id')->primary();
-            $table->timestamps();
+            $table->unsignedBigInteger('user_id');
             $table->string('list_name');
             $table->longText('list_description');
             $table->string('list_image_path');
+
+            $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            
         });
     }
 
@@ -29,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_lists_tables');
+        Schema::dropIfExists('user_lists');
     }
 };
