@@ -19,13 +19,8 @@
         <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
 
         <!-- select2 -->
-        <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
-
-        <!-- select2 -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 
         <!-- alpine js -->
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -36,10 +31,10 @@
     </head>
     <body class="font-sans text-gray-900 overflow-y-hidden">
         <!-- Background here -->
-        <div class="overflow-hidden flex flex-col sm:justify-center items-center sm:pt-0 bg-center bg-contain  bg-[url('/public/imgs/background.jpg')]" 
+        <div class="flex flex-col sm:justify-center items-center sm:pt-0 bg-center bg-contain  bg-[url('/public/imgs/background.jpg')] overflow-hidden "  
         x-data="{ isLoginVisible: false, isRegisterVisible: false ,isUserModalVisible:false}"
         > 
-            <div class="overflow-hidden w-screen h-screen bg-black bg-opacity-50 flex flex-col items-center">
+            <div class=" w-screen h-screen bg-black bg-opacity-50 flex flex-col items-center overflow-hidden">
 
                 <div class="flex flex-col space-y-4 mt-40 bg-gray-400  rounded-xl p-10">
                     <img src="/imgs/logo.jpeg" alt="avatar" class="rounded-xl w-44 ">
@@ -52,16 +47,12 @@
                         Login
                     </button>
 
-                    <button class="p-4 text-white font-semibold tracking-wide text-xl rounded-lg transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 "
+                    <button class="p-4 text-white font-semibold tracking-wide text-xl rounded-lg  bg-blue-500 hover:bg-indigo-500 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 "
                     x-on:click.prevent="
                         isRegisterVisible=true
                     ">
                         Sign up
                     </button>
-
-
-                    <select class="tags bg-black rounded-lg w-32" id="tags" name="tags" >
-                    </select>
                     
                 </div>
            
@@ -180,33 +171,98 @@
                         style="background-color: rgba(0, 0, 0, .5);"
                         class="z-50 fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto"
                     >
-                        <div class="container mx-auto lg:px-32 rounded-2xl overflow-y-auto">
-                            <div class="bg-gray-900 rounded-2xl">
-                                <div class="flex justify-end pr-4 pt-2">
-                                    <button
-                                        class="text-3xl leading-none text-gray-300 hover:text-gray-300"
-                                        @click="isUserModalVisible = false"
-                                        @keydown.escape.window="isUserModalVisible = false"
-                                    >
-                                        &times;
-                                    </button>
-                                </div>
-                                <div class="modal-body px-8 py-8 overflow-hidden relative" id="modal-body"
-                                x-init="select2 = $($refs.select).select2({
-                                    placeholder:'select',
-                                    ajax:{
-                                        url:' {{ route('games.get') }}',
+                        <div class="container mx-auto lg:px-32  overflow-y-auto">
+                                
+                            <div class=" px-8 py-8 overflow-hidden relative bg-gray-900 rounded-2xl "
+                            x-init="select2 = $([$refs.select,$refs.select2,$refs.select3,$refs.select4,$refs.select5]).select2({
+                                placeholder:'select',
+                                allowClear:true,
+                                ajax:{
+                                    url:' {{ route('games.getGames') }}',
+                                    type:'post',
+                                    delay:250,
+                                    dataType:'json',
+                                    data: function (params) {
+                                    return{
+                                        name: params.term,
+                                    
+                                        '_token':'{{ csrf_token() }}',
+                                        };
+                                    },
+
+                                    processResults:function(data){
+                                    return{
+                                        results:$.map(data,function(item){
+                                            return{
+                                                id:item.id,
+                                                text:item.name
+                                            }
+                                        })
                                     }
+                                }
+
+                                }
                                 });">
-                                    <p class="text-white">user preference model is here</p>
-                                    <form action="" method="post">
-                                        @csrf
-                                        <!-- <select  x-ref="select" class=" bg-black rounded-lg w-32" >
+                                <p class="font-extrabold text-4xl p-7 self-center text-white flex justify-center">Choose Your Favorite Games</p>
+                                
+                                <form action="{{ route('games.store') }}" method="post" class="flex flex-row space-x-28">
+                                    @csrf
+                                    <!-- Games Div -->
+                                    <div class="flex flex-col space-y-8">
+                                        <div class="space-y-2">
+                                            <x-input-label for="Game1" :value="__('Game (1)')" class="text-gray-400" />
+                                            <select name="game1" x-ref="select" class=" bg-black rounded-lg w-64 " > </select>
+                                        </div>
+
+                                        <div class="space-y-2">
+                                            <x-input-label for="Game2" :value="__('Game (2)')" class="text-gray-400" />
+                                            <select name="game2" x-ref="select2" class=" bg-black rounded-lg w-64 " > </select>
+                                        </div>
+
+                                        <div class="space-y-2">
+                                            <x-input-label for="Game3" :value="__('Game (3)')" class="text-gray-400" />
+                                            <select name="game3" x-ref="select3" class=" bg-black rounded-lg w-64 " > </select>
+                                        </div>
+
+                                        <div class="space-y-2">
+                                            <x-input-label for="Game4" :value="__('Game (4)')" class="text-gray-400" />
+                                            <select name="game4" x-ref="select4" class=" bg-black rounded-lg w-64 " > </select>
+                                        </div>
+
+                                        <div class="space-y-2">
+                                            <x-input-label for="Game5" :value="__('Game (5)')" class="text-gray-400" />
+                                            <select name="game5" x-ref="select5" class=" bg-black rounded-lg w-64 " > </select>
+                                        </div>
+                                    
+
+
+                                    </div>
+
+                                    <!-- Rating div -->
+                                    <div class="container w-1/2 h-1/2 bg-white">
+                                        emojis div
+                                        <div class="flex">
+                                            
+                                            <input type="radio" name="star" id="star1" value="5" class=""><!-- hidden -->
+                                            <label for="star1" class="opacity-50 hover:opacity-100 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
+                                                <img src="/imgs/cool.png" class="w-16 h-16">
+                                                <p>loved it</p>
+                                            </label>
+                                        
+                                            <input type="radio" name="star" id="star2" value="4">
+                                            <label for="star2">
+                                                <img src="/imgs/angry.png" class="w-16 h-16">
+                                                <p>loved </p>
+                                            </label>
                                            
-                                        </select> -->
-                                    </form>
-                                </div>
+                                        </div>
+                                    </div>
+                                    <button class="bg-white w-full lg:w-1/2 rounded p-4 text-black text-lg font-semibold hover:bg-gray-400  transition ease-in-out duration-300" type="submit" >submit</button> 
+
+                                </form>
+                                
                             </div>
+                            
                         </div>
                     </div>
                 </template>
@@ -226,29 +282,29 @@
 <script>
     console.log('hi from login.blade.php')
 
-
     $(document).ready(function(){
 
         $('#tags').select2({
             placeholder:'select',
             ajax: {
-                url:" {{ route('games.get') }}",
+                url:" {{ route('games.getGames') }}",
                 type:"post",
                 delay:250,
                 dataType:'json',
                 data: function (params) {
                 return{
                     name: params.term,
+                   
                     "_token":"{{ csrf_token() }}",
                     };
                 },
-                
+
                 processResults:function(data){
                     return{
                         results:$.map(data,function(item){
                             return{
                                 id:item.id,
-                                title:item.title
+                                text:item.name
                             }
                         })
                     }

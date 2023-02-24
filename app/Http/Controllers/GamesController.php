@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\user_preference;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -57,6 +58,20 @@ class GamesController extends Controller
         })->toArray();
     }
 
+    public function getGames(Request $request){
+        $search =$request->name;
+
+        return Http::withHeaders(config('services.igdb'))
+            ->send('POST', 'https://api.igdb.com/v4/games?', 
+            [
+                'body' => 'fields id,name;
+                search "'.$search.'" ;
+                limit 8; '
+            ]
+            )->json();
+        
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -75,7 +90,19 @@ class GamesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data=$request->validate([
+            'game1'=>'required',
+            'star'=>'required'
+        ]);
+        $data['game1']=json_encode($request->game1);
+        user_preference::create([
+        'user_id'=>'1',
+        'game_id'=>$data['game1'],
+        'rating'=>$data['star'],
+    ]);
+    
+    return back();
+        
     }
 
     /**
