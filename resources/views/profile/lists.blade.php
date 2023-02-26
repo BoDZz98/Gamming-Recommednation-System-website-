@@ -13,6 +13,7 @@
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 py-5 ml-24 lg:ml-40 mb-10 space-y-9">
+    <!-- one list -->
     <a href="" class="group w-52 h-72 pt-9 transition ease-in-out duration-300">
         <div class="w-52 h-72  rounded-lg bg-purple-300 px-5  ">
             <button class="pl-32 pt-3  w-6 h-6 opacity-0 group-hover:opacity-100 transition ease-in-out duration-300">

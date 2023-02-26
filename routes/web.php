@@ -48,7 +48,8 @@ Route::redirect(uri:'/',destination:'login');
 
 Route::get('/home',[GamesController::class,'index'])->name('games.index');
 Route::get('/browse',[GamesController::class,'browse'])->name('games.browse');
-Route::post('/games',[GamesController::class,'getGames'])->name('games.get');
+Route::post('/games',[GamesController::class,'getGames'])->name('games.getGames');
+Route::post('/storeUserGames',[GamesController::class,'store'])->name('games.store');
 
 Route::get('/games/{slug}',[GamesController::class,'show'])->name('games.show');
 Route::get('/category/{name}',[GamesController::class,'categoryGames'])->name('games.categoryGames');
