@@ -106,57 +106,7 @@
                 :class="isRegisterVisible ? 'transition-transform duration-1000 -translate-y-[57rem] ' : 'translate-y-[60rem] ' " >
                     <img src="/imgs/logo.jpeg" alt="avatar" class="rounded-xl w-44 ml-28 object-center">
 
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-
-                        <!-- Name -->
-                        <div>
-                            <x-input-label for="name" :value="__('Name')" />
-                            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-                        </div>
-
-                        <!-- Email Address -->
-                        <div class="mt-4">
-                            <x-input-label for="email" :value="__('Email')" />
-                            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                        </div>
-
-                        <!-- Password -->
-                        <div class="mt-4">
-                            <x-input-label for="password" :value="__('Password')" />
-
-                            <x-text-input id="password" class="block mt-1 w-full"
-                                            type="password"
-                                            name="password"
-                                            required autocomplete="new-password" />
-
-                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                        </div>
-
-                        <!-- Confirm Password -->
-                        <div class="mt-4">
-                            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                            type="password"
-                                            name="password_confirmation" required autocomplete="new-password" />
-
-                            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-                        </div>
-                            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                                {{ __('Already registered?') }}
-                            </a>
-
-                        <div class="flex items-center justify-end mt-4">
-                           
-
-                            <x-primary-button class="ml-4">
-                                {{ __('Register') }}
-                            </x-primary-button>
-                        </div>
-                    </form>
+                    @livewire('user-games') 
                 </div>
 
                 <!-- user preference model here -->
@@ -199,7 +149,19 @@
                                 });">
                                 <p class="font-extrabold text-4xl p-7 self-center text-white flex justify-center">Choose Your Favorite Games</p>
                                 
-                                @livewire('user-games') 
+                                <form action="{{ route('games.store') }}" method="post" class="flex flex-row space-x-28">
+                                    @csrf
+                                    <!-- Games Div -->
+                                    <div class="flex flex-col space-y-4">
+
+                                        <x-games-rating/>
+
+                                        
+                                    
+
+                                        <button class="bg-white w-full lg:w-1/2 rounded p-4 text-black text-lg font-semibold hover:bg-gray-400  transition ease-in-out duration-300" type="submit" >submit</button> 
+
+                                    </div>
 
                                 
                             </div>
@@ -226,11 +188,11 @@
 
 
 <script>
-    console.log('hi from login.blade.php')
+   
 
     $(document).ready(function(){
 
-        $('#tags').select2({
+        $('#select').select2({
             placeholder:'select',
             ajax: {
                 url:" {{ route('games.getGames') }}",
