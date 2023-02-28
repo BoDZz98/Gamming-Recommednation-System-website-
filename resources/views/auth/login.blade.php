@@ -1,32 +1,25 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       
         @vite('resources/css/main.css')
-        <title>Gamer's Guide</title>
-
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
-
-        <!-- Scripts -->
-         @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-        
-        
+        <link rel="stylesheet" href="{{ asset( 'css/main.css' ) }}">
+        <link rel="stylesheet" href="{{ url('css/app.css')}}" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600,800,900" rel="stylesheet" type="text/css">
         <!-- jquery -->
         <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-
-        <!-- select2 -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
         <!-- alpine js -->
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-        
-        
+        <!-- select2 -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+        @livewireStyles
+
+        <title>Gamer's Guide</title>
         
     </head>
     <body class="font-sans text-gray-900 overflow-y-hidden">
@@ -152,11 +145,12 @@
 
                             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                         </div>
-
-                        <div class="flex items-center justify-end mt-4">
                             <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
                                 {{ __('Already registered?') }}
                             </a>
+
+                        <div class="flex items-center justify-end mt-4">
+                           
 
                             <x-primary-button class="ml-4">
                                 {{ __('Register') }}
@@ -166,12 +160,12 @@
                 </div>
 
                 <!-- user preference model here -->
-                <template  ><!-- x-if="isUserModalVisible" -->
+                <template x-if="isUserModalVisible" ><!--  -->
                     <div 
                         style="background-color: rgba(0, 0, 0, .5);"
                         class="z-50 fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto"
                     >
-                        <div class="container mx-auto lg:px-32  overflow-y-auto">
+                        <div class="container mx-auto lg:px-56  overflow-y-auto">
                                 
                             <div class=" px-8 py-8 overflow-hidden relative bg-gray-900 rounded-2xl "
                             x-init="select2 = $([$refs.select,$refs.select2,$refs.select3,$refs.select4,$refs.select5]).select2({
@@ -205,23 +199,8 @@
                                 });">
                                 <p class="font-extrabold text-4xl p-7 self-center text-white flex justify-center">Choose Your Favorite Games</p>
                                 
-                                <form action="{{ route('games.store') }}" method="post" class="flex flex-row space-x-28">
-                                    @csrf
-                                    <!-- Games Div -->
-                                    <div class="flex flex-col space-y-4">
+                                @livewire('user-games') 
 
-                                        <x-games-rating/>
-
-                                        
-                                    
-
-                                        <button class="bg-white w-full lg:w-1/2 rounded p-4 text-black text-lg font-semibold hover:bg-gray-400  transition ease-in-out duration-300" type="submit" >submit</button> 
-
-                                    </div>
-
-                                
-
-                                </form>
                                 
                             </div>
                             
@@ -232,6 +211,11 @@
             </div>
 
         </div>
+        @livewireScripts
+        <script src="/js/app.js"></script>
+        <!-- <script src="/js/main.js"></script> -->
+        <script src={{ url('js/main.js')}}></script>
+        @stack('scripts')
         
     </body>
     

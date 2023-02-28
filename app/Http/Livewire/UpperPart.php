@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
@@ -13,6 +14,13 @@ class UpperPart extends Component
 {
     public $detailsPart=[]; 
     public $slug;
+
+    public function goToNextPage(){
+        
+        Log::info('clicked');
+
+        
+    }
     
     public function loadDetailsPart()
     {

@@ -137,6 +137,9 @@
                         </ul>
                     </div>
                 </button>
+
+<!--                 <button wire:click="goToNextPage" class="bg-white w-full lg:w-1/2 rounded p-4 text-black text-lg font-semibold hover:bg-gray-400  transition ease-in-out duration-300" type="button" >Next</button> 
+ -->
             </div>
         </div>
        
