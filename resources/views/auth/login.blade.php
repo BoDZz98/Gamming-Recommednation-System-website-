@@ -106,69 +106,79 @@
                 :class="isRegisterVisible ? 'transition-transform duration-1000 -translate-y-[57rem] ' : 'translate-y-[60rem] ' " >
                     <img src="/imgs/logo.jpeg" alt="avatar" class="rounded-xl w-44 ml-28 object-center">
 
-                    @livewire('user-games') 
+                    {{-- @livewire('user-games')   --}}
+                    <form  method="post"action="{{ route('register') }} ">
+                        @csrf
+                        <div>
+                            <x-input-label for="name" :value="__('Name')" />
+                            <x-text-input wire:model.lazy="name" id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                        </div>
+        
+                        <!-- Email Address -->
+                        <div class="mt-4">
+                            <x-input-label for="email" :value="__('Email')" />
+                            <x-text-input wire:model.lazy="email" id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        </div>
+        
+                        <!-- Password -->
+                        <div class="mt-4">
+                            <x-input-label for="password" :value="__('Password')" />
+        
+                            <x-text-input id="password" class="block mt-1 w-full"
+                                            wire:model.lazy="pass"
+                                            type="password"
+                                            name="password"
+                                            required autocomplete="new-password" />
+        
+                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                        </div>
+        
+                        <!-- Confirm Password -->
+                        <div class="mt-4">
+                            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+        
+                            <x-text-input id="password_confirmation" class="block mt-1 w-full"
+                                            type="password" wire:model.lazy="confirmPass"
+                                            name="password_confirmation" required autocomplete="new-password" />
+        
+                            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                        </div>
+                            
+        
+                        <div class="flex items-center justify-end mt-4">
+                            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
+                                {{ __('Already registered?') }}
+                            </a>
+                             <x-primary-button class="ml-4">
+                                {{ __('Register') }}
+                            </x-primary-button> 
+                        </div>
+                    </form>
                 </div>
 
                 <!-- user preference model here -->
-                <template x-if="isUserModalVisible" ><!--  -->
+                
                     <div 
-                        style="background-color: rgba(0, 0, 0, .5);"
+                        style="background-color: rgba(0, 0, 0, .5);" x-show="isUserModalVisible"
                         class="z-50 fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto"
                     >
                         <div class="container mx-auto lg:px-56  overflow-y-auto">
-                                
-                            <div class=" px-8 py-8 overflow-hidden relative bg-gray-900 rounded-2xl "
-                            x-init="select2 = $([$refs.select,$refs.select2,$refs.select3,$refs.select4,$refs.select5]).select2({
-                                placeholder:'select',
-                                allowClear:true,
-                                ajax:{
-                                    url:' {{ route('games.getGames') }}',
-                                    type:'post',
-                                    delay:250,
-                                    dataType:'json',
-                                    data: function (params) {
-                                    return{
-                                        name: params.term,
-                                    
-                                        '_token':'{{ csrf_token() }}',
-                                        };
-                                    },
-
-                                    processResults:function(data){
-                                    return{
-                                        results:$.map(data,function(item){
-                                            return{
-                                                id:item.id,
-                                                text:item.name
-                                            }
-                                        })
-                                    }
-                                }
-
-                                }
-                                });">
+                            <div class=" px-8 py-8 overflow-hidden relative bg-gray-900 rounded-2xl ">
                                 <p class="font-extrabold text-4xl p-7 self-center text-white flex justify-center">Choose Your Favorite Games</p>
-                                
                                 <form action="{{ route('games.store') }}" method="post" class="flex flex-row space-x-28">
                                     @csrf
                                     <!-- Games Div -->
                                     <div class="flex flex-col space-y-4">
-
-                                        <x-games-rating/>
-
-                                        
-                                    
-
+                                       {{--  <x-games-rating/> --}}
+                                       @livewire('user-games')   
                                         <button class="bg-white w-full lg:w-1/2 rounded p-4 text-black text-lg font-semibold hover:bg-gray-400  transition ease-in-out duration-300" type="submit" >submit</button> 
-
                                     </div>
-
-                                
                             </div>
-                            
                         </div>
                     </div>
-                </template>
+               
 
             </div>
 
@@ -180,10 +190,6 @@
         @stack('scripts')
         
     </body>
-    
-   
-   
-    
 </html>
 
 
@@ -225,3 +231,33 @@
 
         
 </script>
+
+{{--  x-init="select2 = $([$refs.select,$refs.select2,$refs.select3,$refs.select4,$refs.select5]).select2({
+                                placeholder:'select',
+                                allowClear:true,
+                                ajax:{
+                                    url:' {{ route('games.getGames') }}',
+                                    type:'post',
+                                    delay:250,
+                                    dataType:'json',
+                                    data: function (params) {
+                                    return{
+                                        name: params.term,
+                                    
+                                        '_token':'{{ csrf_token() }}',
+                                        };
+                                    },
+
+                                    processResults:function(data){
+                                    return{
+                                        results:$.map(data,function(item){
+                                            return{
+                                                id:item.id,
+                                                text:item.name
+                                            }
+                                        })
+                                    }
+                                }
+
+                                }
+                                });" --}}
