@@ -161,19 +161,19 @@
                 <!-- user preference model here -->
                 
                     <div 
-                        style="background-color: rgba(0, 0, 0, .5);" x-show="isUserModalVisible"
+                        style="background-color: rgba(0, 0, 0, .5);"{{--  x-show="isUserModalVisible" --}}
                         class="z-50 fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto"
                     >
                         <div class="container mx-auto lg:px-56  overflow-y-auto">
                             <div class=" px-8 py-8 overflow-hidden relative bg-gray-900 rounded-2xl ">
-                                <p class="font-extrabold text-4xl p-7 self-center text-white flex justify-center">Choose Your Favorite Games</p>
-                                <form action="{{ route('games.store') }}" method="post" class="flex flex-row space-x-28">
-                                    @csrf
+                                <p class="font-extrabold text-4xl p-7  text-white flex justify-center self-center">Choose Your Favorite Games</p>
+                                {{-- <form action="{{ route('games.store') }}" method="post" class="flex flex-row space-x-28">
+                                    @csrf --}}
                                     <!-- Games Div -->
                                     <div class="flex flex-col space-y-4">
                                        {{--  <x-games-rating/> --}}
                                        @livewire('user-games')   
-                                        <button class="bg-white w-full lg:w-1/2 rounded p-4 text-black text-lg font-semibold hover:bg-gray-400  transition ease-in-out duration-300" type="submit" >submit</button> 
+                                       {{--  <button class="bg-white w-full lg:w-1/2 rounded p-4 text-black text-lg font-semibold hover:bg-gray-400  transition ease-in-out duration-300" type="submit" >submit</button> --}} 
                                     </div>
                             </div>
                         </div>
