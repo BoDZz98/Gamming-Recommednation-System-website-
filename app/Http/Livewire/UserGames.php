@@ -2,14 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\User;
 use App\Models\user_preference;
-use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
@@ -19,7 +13,17 @@ use Illuminate\Support\Str;
 class UserGames extends Component
 {
     public $game1;
+    public $game2;
+    public $game3;
+    public $game4;
+    public $game5;
     public $rating1;
+    public $rating2;
+    public $rating3;
+    public $rating4;
+    public $rating5;
+   
+    
 
     public $currentPage=1;
     public $pages=[
@@ -30,10 +34,8 @@ class UserGames extends Component
         5=>'Step 5/5',
     ];
 
-    public function goToNextPage(){
-        
-        Log::info('clicked');
-
+    public function goToNextPage(){ 
+       /*  Log::info($this->game1.$this->game2); */
         $this->currentPage++;
     }
 
@@ -42,22 +44,20 @@ class UserGames extends Component
     }
 
     public function submit(){
-        
-        user_preference::create([
-            'user_id'=>'1',
-            'game_id'=>$this->game1,
-            'rating'=>$this->rating1,
-        ]);
-        
-
+        $arrGames=[$this->game1,$this->game2,$this->game3,$this->game4,$this->game5];
+        $arrRating=[$this->rating1,$this->rating2,$this->rating3,$this->rating4,$this->rating5];
+        for ($i=0; $i < 5; $i++) { 
+            user_preference::create([
+                'user_id'=>'8',
+                'game_id'=>$arrGames[$i],
+                'rating'=>$arrRating[$i],
+            ]);
+        };
     }
 
     public function render()
-    {
-        
+    {  
         Log::info('This is some useful information.');
-
-
         return view('livewire.user-games');
     }
 
