@@ -34,8 +34,32 @@ class UserGames extends Component
         5=>'Step 5/5',
     ];
 
+    private $validationRules=[
+        1=>[
+            'game1'=>['required'],
+            'rating1'=>['required']
+        ],
+        2=>[
+            'game2'=>['required'],
+            'rating2'=>['required']
+        ],
+        3=>[
+            'game3'=>['required'],
+            'rating3'=>['required']
+        ],
+        4=>[
+            'game4'=>['required'],
+            'rating4'=>['required']
+        ],
+        5=>[
+            'game5'=>['required'],
+            'rating5'=>['required']
+        ]
+    ];
+
     public function goToNextPage(){ 
        /*  Log::info($this->game1.$this->game2); */
+       $this->validate($this->validationRules[$this->currentPage]);
         $this->currentPage++;
     }
 
@@ -44,6 +68,8 @@ class UserGames extends Component
     }
 
     public function submit(){
+        $rules=collect($this->validationRules)->collapse()->toArray(); //Make it an array without the keys[1,2,3,4,5]
+        $this->validate($rules);        
         $arrGames=[$this->game1,$this->game2,$this->game3,$this->game4,$this->game5];
         $arrRating=[$this->rating1,$this->rating2,$this->rating3,$this->rating4,$this->rating5];
         for ($i=0; $i < 5; $i++) { 

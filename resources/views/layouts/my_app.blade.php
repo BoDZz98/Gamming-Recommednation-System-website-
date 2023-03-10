@@ -67,6 +67,7 @@
                         </div>
                     </div>
                 </div>
+                <p>Games Rated {{$total}}/10</p>
                 <div class="flex items-center mt-6 lg:mt-0">
                     @livewire('search-dropdown') 
                     <!-- Logo dropdown -->

@@ -25,12 +25,17 @@
                     @endif
                 @endforeach
             </div>
+            @error('game1')
+                <span class="text-xs text-red-500  flex justify-center"> Please Select A Game</span>
+            @enderror
 
             <!-- rating for 1 game -->
             <x-user-preference.all-emoji name='rating1' 
             isActive='isActive' isActive2='isActive2' isActive3='isActive3' isActive4='isActive4' isActive5='isActive5'
             id='star' id2='star2' id3='star3' id4='star4' id5='star5' />
-            
+            @error('rating1')
+                <span class="text-xs text-red-500  flex justify-center"> Rating Is Required</span>
+            @enderror            
         <!-- ------------------------------------------------------- -->
          
         @elseif($currentPage===2)
@@ -53,10 +58,16 @@
                     @endif
                 @endforeach
             </div>
+            @error('game2')
+                <span class="text-xs text-red-500  flex justify-center"> Please Select A Game</span>
+            @enderror
+
             <x-user-preference.all-emoji name='rating2' 
             isActive='isActive' isActive2='isActive2' isActive3='isActive3' isActive4='isActive4' isActive5='isActive5'
             id='star' id2='star2' id3='star3' id4='star4' id5='star5' />
-
+            @error('rating2')
+                <span class="text-xs text-red-500  flex justify-center"> Rating Is Required</span>
+            @enderror  
             
         <!-- -------------------------------------------------------------------- -->
         @elseif($currentPage===3)
@@ -78,12 +89,17 @@
                     @endif
                 @endforeach
             </div>
+            @error('game3')
+                <span class="text-xs text-red-500  flex justify-center"> Please Select A Game</span>
+            @enderror
 
             <!-- rating for 1 game -->
             <x-user-preference.all-emoji name='rating3' 
             isActive='isActive' isActive2='isActive2' isActive3='isActive3' isActive4='isActive4' isActive5='isActive5'
             id='star' id2='star2' id3='star3' id4='star4' id5='star5' />
-
+            @error('rating3')
+                <span class="text-xs text-red-500  flex justify-center"> Rating Is Required</span>
+            @enderror  
          <!-- -------------------------------------------------------------------- -->
         @elseif($currentPage===4)
             <p class="  p-7  text-gray-400 flex justify-center">{{$pages[$currentPage]}}</p>
@@ -105,12 +121,17 @@
                     @endif
                 @endforeach
             </div>
+            @error('game4')
+                <span class="text-xs text-red-500  flex justify-center"> Please Select A Game</span>
+            @enderror
 
             <!-- rating for 1 game -->
             <x-user-preference.all-emoji name='rating4' 
             isActive='isActive' isActive2='isActive2' isActive3='isActive3' isActive4='isActive4' isActive5='isActive5'
             id='star' id2='star2' id3='star3' id4='star4' id5='star5' />
-                
+            @error('rating4')
+                <span class="text-xs text-red-500  flex justify-center"> Rating Is Required</span>
+            @enderror 
 
         <!-- -------------------------------------------------------------------- -->
         @elseif($currentPage===5)
@@ -133,12 +154,18 @@
                     @endif
                 @endforeach
             </div>
+            @error('game5')
+                <span class="text-xs text-red-500  flex justify-center"> Please Select A Game</span>
+            @enderror
 
             <!-- rating for 1 game -->
             <x-user-preference.all-emoji name='rating5' 
             isActive='isActive' isActive2='isActive2' isActive3='isActive3' isActive4='isActive4' isActive5='isActive5'
             id='star' id2='star2' id3='star3' id4='star4' id5='star5' />
-                
+            @error('rating5')
+                <span class="text-xs text-red-500  flex justify-center"> Rating Is Required</span>
+            @enderror 
+            
         @endif
 
 
