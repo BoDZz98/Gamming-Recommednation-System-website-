@@ -28,7 +28,12 @@ class AppServiceProvider extends ServiceProvider
         
         view()->composer('layouts.my_app',function ($view){
             $number = user_preference::where('user_id',Auth::user()->id)->count();
-            $view->with('total',$number);
+            if($number>=10){
+                $view->with('total',10);
+            }
+            else{
+                $view->with('total',$number);
+            }
         });
     }
 }

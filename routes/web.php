@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GamesController;
 use App\Http\Controllers\ProfileController;
@@ -53,6 +54,10 @@ Route::post('/storeUserGames',[GamesController::class,'store'])->name('games.sto
 
 Route::get('/games/{slug}',[GamesController::class,'show'])->name('games.show');
 Route::get('/category/{name}',[GamesController::class,'categoryGames'])->name('games.categoryGames');
+
+Route::get('/comments/{id}',[CommentsController::class,'index'])->name('comments.index');
+Route::post('/storeComment',[CommentsController::class,'store'])->name('comments.store');
+
 
 Route::get('/profile/overview',[ProfileController::class,'index'])->name('profile.index');
 Route::get('/profile/favorites',[ProfileController::class,'favorites'])->name('profile.favorites');

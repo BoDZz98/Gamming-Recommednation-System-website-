@@ -19,7 +19,6 @@ class UpperPart extends Component
         
         Log::info('clicked');
 
-        
     }
     
     public function loadDetailsPart()

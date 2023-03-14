@@ -14,38 +14,25 @@ use Illuminate\Support\Str;
 class UserGames2 extends Component
 {   public $game1;
     public $rating1=0;
+    public $currentGame=0;
 
     public $popularGames=[]; 
     public $tempPopularGames=[]; 
 
-    public $currentGame=0;
-
     public function goToNextPage(){ 
-         /* Log::info(sizeof($this->popularGames)); */
-         $temp=user_preference::where('user_id', Auth::user()->id)
-             ->where('game_id', '$this->game1')->get();
-             if($temp!=null){
-                Log::info('already exist'.$this->currentGame); 
-                $temp->fresh();
-                $this->increment();
-             }
-             else{
-         if($this->rating1!=0){
-
-                /* user_preference::create([
-                    'user_id'=>Auth::user()->id,
-                    'game_id'=>$this->game1,
-                    'rating'=>$this->rating1,
-                ]);
-            $this->increment(); */
-                Log::info('$temp->game_id'); 
-
-            
+        // if he rated a game and pressed next button then create
+        if($this->rating1!=0){
+            user_preference::create([
+                'user_id'=>Auth::user()->id,
+                'game_id'=>$this->game1,
+                'rating'=>$this->rating1,
+            ]);
+            $this->increment();
         }
+        // if he didnt rate the game and pressed next button then skip the game
         else{
             $this->increment();
         }
-    }
     }
 
      public function increment(){ 
@@ -53,7 +40,16 @@ class UserGames2 extends Component
         $this->currentGame++;
         $this->tempPopularGames=$this->popularGames[$this->currentGame];
         $this->game1=$this->tempPopularGames['id'];
-        return view('livewire.user-games2');
+
+        $temp=user_preference::where('user_id', Auth::user()->id)
+             ->where('game_id', $this->game1)->first();
+        if($temp!=null){
+            Log::info('already exist'.$this->currentGame. '//' .$this->game1); 
+            $this->increment();
+        }
+        else{
+            return view('livewire.user-games2');
+        }
     }
 
     
@@ -76,8 +72,15 @@ class UserGames2 extends Component
          
         //dump($this->cleanView($popularGamesCleaned));
         $this->popularGames =$this->cleanView($popularGamesCleaned);
-        $this->tempPopularGames=$this->popularGames[0];
+        $this->tempPopularGames=$this->popularGames[$this->currentGame];
         $this->game1=$this->tempPopularGames['id'];
+
+        $temp=user_preference::where('user_id', Auth::user()->id)
+             ->where('game_id', $this->game1)->first();
+        if($temp!=null){
+            $this->increment();
+        }
+        
         }
 
     public function cleanView($games){
@@ -94,8 +97,4 @@ class UserGames2 extends Component
         return view('livewire.user-games2');
     }
 
-    public function mount2()
-    {
-        $this->game1=$this->tempPopularGames['id'];
-    }
 }
