@@ -72,7 +72,7 @@
                     @livewire('search-dropdown') 
                     <!-- Logo dropdown -->
                     <div class="ml-6">
-                        <x-dropdown align="right" width="48">
+                        {{-- <x-dropdown align="right" width="48">
                             <!-- The Logo itself -->
                             <x-slot name="trigger">
                                 <a href="#"> <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-8"></a>
@@ -98,20 +98,36 @@
                                     </x-dropdown-link>
                                 </form>
                             </x-slot>
-                        </x-dropdown>
+                        </x-dropdown> --}}
                     </div>
                 </div>
             </nav>
         </header> 
         
-        <main class="py-8"> @yield('content')</main>
+        <main class="py-8">
+            <div>
+                @if(session()->has('errorMessage'))
+                    <div class="bg-red-500 p-6 mx-28 my-4 rounded-lg text-center opacity-80" id="alert">
+                        {{session()->get('errorMessage')}}
+                    </div>
+                @endif
+                
+                @if(session()->has('sucMessage'))
+                    <div class="bg-green-500 p-6 mx-28 my-4 rounded-lg text-center opacity-80" id="alert">
+                        {{session()->get('sucMessage')}}
+                    </div>
+                @endif
+            </div>
+            @yield('content')</main>
         <footer class="border-t border-gray-800"> 
             <div class="container mx-auto px-4 py-6">Powered by <a href="#" class="underline hover:text-gray-400">IGDB API</a>
         </footer> 
         @livewireScripts
-        <script src="/js/app.js"></script>
-        <script src="/js/main.js"></script> 
         <script src={{ url('js/main.js')}}></script>
-        @stack('scripts')
+        {{-- <script src="/js/app.js"></script>
+        <script src="/js/main.js"></script> 
+        @stack('scripts') --}}
+        
+        
     </body>
 </html>

@@ -20,7 +20,6 @@ class UserGames3 extends Component
         $this->gameInput=$this->gameId;
     }
 
-
     public function submit(){
         $this->validate([
             'rating1'=>'required',
@@ -28,20 +27,34 @@ class UserGames3 extends Component
 
         if($this->desc==null){
             log::info('in if');
-            /* user_preference::create([
-                'user_id'=>Auth::user()->id,
-                'game_id'=>$this->gameInput,
-                'rating'=>$this->rating1,
-            ]); */
+            $temp=user_preference::where('user_id', Auth::user()->id)
+             ->where('game_id', $this->gameInput)->first();
+             //if he didn't rate this game yet
+             if($temp==null){
+                user_preference::create([
+                    'user_id'=>Auth::user()->id,
+                    'game_id'=>$this->gameInput,
+                    'rating'=>$this->rating1,
+                ]);
+                return redirect()->route('comments.index',$this->gameId )->with('sucMessage','Successfully rated this game'); 
+
+            }
+            else{
+                return redirect()->route('comments.index',$this->gameId )->with('errorMessage','Already rated this game'); 
+            }
         }
         else{
-            log::info('in else');
+            //log::info('in else');
+            $temp=user_preference::where('user_id', Auth::user()->id)
+             ->where('game_id', $this->gameInput)->first();
 
-            user_preference::create([
-                'user_id'=>Auth::user()->id,
-                'game_id'=>$this->gameInput,
-                'rating'=>$this->rating1,
-            ]);
+             if($temp==null){
+                user_preference::create([
+                    'user_id'=>Auth::user()->id,
+                    'game_id'=>$this->gameInput,
+                    'rating'=>$this->rating1,
+                ]);
+            }
             comments::create([
                 'user_id'=>Auth::user()->id,
                 'game_id'=>$this->gameInput,
@@ -49,7 +62,7 @@ class UserGames3 extends Component
                 'stars'=>$this->rating1,
             ]);
             
-            return redirect()->route('comments.index',$this->gameId ); 
+            return redirect()->route('comments.index',$this->gameId )->with('sucMessage','Comment added successfully'); 
         }
     }
 

@@ -56,20 +56,7 @@ class CommentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
-       /*  Log::warning("in store");
-        $request->validate([
-            'rating1'=>'required',
-        ]);
-        comments::create([
-            'user_id'=>Auth::user()->id,
-            'game_id'=>$request->input('gameId'),
-            'comment_description'=>$request->input('desc'),
-            'stars'=>$request->input('rating1'),
-        ]);
-        
-        return redirect()->route('comments.index',$request->input('gameId') ); */
-    }
+    {   }
 
     /**
      * Display the specified resource.
