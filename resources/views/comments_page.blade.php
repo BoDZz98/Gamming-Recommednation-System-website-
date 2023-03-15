@@ -33,23 +33,7 @@
                             </div>
 
                             <p class="font-extrabold text-4xl p-7  text-white flex justify-center self-center">Place your Comment !</p>
-                            <div class="">
-                                <form action="{{ route('comments.store' )}}" method="post">
-                                    @csrf
-                                    <input type="hidden" value="{{ $game['id'] }}" name='gameId'>
-                                    <label for="desc" class="mb-2">Comment Description</label>
-                                    <textarea type="text" class="w-full rounded p-3 mb-2 bg-black h-36" id="desc" name="desc"  placeholder="comment"></textarea>
-                                    <x-user-preference.all-emoji name='rating1' 
-                                    isActive='isActive' isActive2='isActive2' isActive3='isActive3' isActive4='isActive4' isActive5='isActive5'
-                                    id='star' id2='star2' id3='star3' id4='star4' id5='star5' />
-                                    @error('rating1')
-                                        <span class="text-xs text-red-500  flex justify-center"> Rating Is Required</span>
-                                    @enderror 
-                                    <div class="text-right mt-2">
-                                        <button class="bg-white w-full lg:w-1/2  rounded p-4 text-black text-lg font-semibold hover:bg-gray-800 hover:text-white transition ease-in-out duration-300" type="submit" >submit</button> 
-                                    </div>
-                                </form>  
-                            </div>
+                            @livewire('user-games3',['gameId' => $game['id']])
                         </div>
                     </div>
                 </div>
