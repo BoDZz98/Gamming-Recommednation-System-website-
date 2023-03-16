@@ -4,7 +4,7 @@ use App\Http\Controllers\CommentsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GamesController;
 use App\Http\Controllers\ProfileController;
-
+use App\Http\Controllers\SendDataController;
 use App\Http\Controllers\SettingsController;
 
 /* 
@@ -69,6 +69,9 @@ Route::get('/profile/lists',[ProfileController::class,'lists'])->name('profile.l
 Route::get('/settings',[SettingsController::class,'index'])->name('settings.index');
 Route::get('/email',[SettingsController::class,'email'])->name('settings.email');
 Route::get('/password',[SettingsController::class,'password'])->name('settings.password');
+
+
+Route::get('/tst',[SendDataController::class,'processData'])->name('tst.processData');
 
 
 Route::get('/dashboard', function () {
