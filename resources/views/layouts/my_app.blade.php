@@ -34,7 +34,7 @@
                     <ul class="flex ml-0 lg:ml-16 space-x-8 ">
                         <li class="mt-6 lg:mt-2"> <a href="{{route( 'games.index') }}" class=" hover:text-gray-400">Home</a></li> 
                         <li class="mt-6 lg:mt-2"> <a href="{{route( 'games.browse') }}" class=" hover:text-gray-400">Browse</a></li> 
-                        <li class="mt-6 lg:mt-2"> <a href="{{route( 'settings.index') }}" class="hover:text-gray-400">Settings</a></li> 
+                        <li class="mt-6 lg:mt-2"> <a href="{{route( 'tst.processData') }}" class="hover:text-gray-400">Settings</a></li> {{-- settings.index --}}
                         <li class="mt-6 lg:mt-2"> <a href="#" x-on:click.prevent="isUserModalVisible2=true" class="hover:text-gray-400">Rating</a></li> 
                         <li class="md:mt-4 lg:mt-0"> 
                             <a href="{{route( 'profile.index') }}" class="mt-6 lg:mt-0 ">
