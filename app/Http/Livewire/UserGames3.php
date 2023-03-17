@@ -39,8 +39,13 @@ class UserGames3 extends Component
                 return redirect()->route('comments.index',$this->gameId )->with('sucMessage','Successfully rated this game'); 
 
             }
+            //updating the old rating
             else{
-                return redirect()->route('comments.index',$this->gameId )->with('errorMessage','Already rated this game'); 
+                user_preference::where('user_id', Auth::user()->id)
+                ->where('game_id', $this->gameInput)
+                ->update(['rating' => $this->rating1]);
+                
+                return redirect()->route('comments.index',$this->gameId )->with('sucMessage','Rating updated successfully'); 
             }
         }
         else{
