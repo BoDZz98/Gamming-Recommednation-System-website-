@@ -32,7 +32,6 @@ public function getData()
 //     $data = DB::table('user_preferences')->get(['user_id', 'game_id','rating']);
 //     return response()->json($data);
 
-
 // Query the database to retrieve integer data
 
 $data = DB::table('user_preferences')->select('my_integer_column')->get(['user_id', 'game_id','rating']);
