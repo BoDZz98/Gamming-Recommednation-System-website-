@@ -42,7 +42,7 @@ class MostAnticipated extends Component
         return collect($games)->map(function($game){
             return collect($game)->merge([
                 'coverImageUrl'=>isset($game['cover'])?Str::replaceFirst('thumb','cover_small', $game['cover']['url']):null,
-                'first_release_date'=>Carbon::parse ($game['first_release_date'])->format('M d,Y'),
+                'first_release_date'=>isset($game['first_release_date'])?Carbon::parse ($game['first_release_date'])->format('M d,Y'):null,
             ]);
         })->toArray();
     }

@@ -27,13 +27,17 @@ class AppServiceProvider extends ServiceProvider
     {
         
         view()->composer('layouts.my_app',function ($view){
-            $number = user_preference::where('user_id',Auth::user()->id)->count();
-            if($number>=10){
+            //$number = user_preference::where('user_id',Auth::user()->id)->count();
+            $allmodels = user_preference::where('user_id',Auth::user()->id)->get();
+
+            /* if($number>=10){
                 $view->with('total',10);
             }
             else{
                 $view->with('total',$number);
-            }
+            } */
+            dd($allmodels);
+            $view->with('total',$allmodels[1]->game_id);
         });
     }
 }
