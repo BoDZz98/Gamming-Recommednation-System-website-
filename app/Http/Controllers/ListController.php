@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\user_lists_table;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ListController extends Controller
 {
@@ -35,7 +37,19 @@ class ListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'list_name'=>'required',
+            'list_description'=>'required'
+        ]);
+        user_lists_table::create([
+            'list_id'=>rand(),
+            'user_id' => Auth::user()->id,
+            'list_name' => $request->input('list_name'),
+            'list_description' => $request->input('list_description'),
+            'list_image_path' => '0',
+        ]);
+        return redirect()->route('profile.lists')->with('sucMessage','Successfully Added This List'); 
+
     }
 
     /**

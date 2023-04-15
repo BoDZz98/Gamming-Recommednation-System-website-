@@ -3,6 +3,7 @@
 use App\Http\Controllers\CommentsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GamesController;
+use App\Http\Controllers\ListController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SendDataController;
 use App\Http\Controllers\SettingsController;
@@ -64,6 +65,8 @@ Route::get('/profile/favorites',[ProfileController::class,'favorites'])->name('p
 Route::get('/profile/wishlist',[ProfileController::class,'wishlist'])->name('profile.wishlist');
 Route::get('/profile/comments',[ProfileController::class,'comments'])->name('profile.comments');
 Route::get('/profile/lists',[ProfileController::class,'lists'])->name('profile.lists');
+
+Route::resource('list',ListController::class );
 
 
 Route::get('/settings',[SettingsController::class,'index'])->name('settings.index');

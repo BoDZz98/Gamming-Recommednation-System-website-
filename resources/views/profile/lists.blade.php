@@ -30,28 +30,7 @@
                 </div>
 
                 <p class="font-extrabold text-4xl p-7  text-white flex justify-center self-center">Add Your List</p>
-                <div class=" flex flex-col items-center">
-                    <form method="POST" class="w-1/2" action=" " enctype="multipart/form-data">
-                        @csrf
-                        <div class="flex flex-col space-y-7">
-                            <input type="text" class=" h-12 rounded px-3 bg-black" id="list_name" name="list_name"  placeholder="List Name"/>
-                            @error('list_name')
-                                <div class="form-error">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-
-                            <textarea type="text" class="w-full rounded p-3 bg-black h-20" id="list_description" name="list_description" value="{{ old('offer_ratio')}}" placeholder="List Description"></textarea>
-                            @error('list_description')
-                                <div class="form-error">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-
-                            <button class="bg-white w-full rounded p-4 text-black text-lg font-semibold hover:bg-gray-400  transition ease-in-out duration-300" type="submit" >Save Changes</button> 
-                        </div>
-                    </form>
-                </div>
+                @livewire('add-edit-list')
             </div>
         </div>
     </div>
