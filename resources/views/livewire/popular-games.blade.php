@@ -1,4 +1,4 @@
-<div wire:init="loadPopularGames" class="popular-games text-sm grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3   gap-12 border-b border-gray-800 pb-16">
+<div wire:init="loadPopularGames" class="popular-games text-sm grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-12 border-b border-gray-800 pb-16">
     <!-- Single game card --> <!-- wire:init="loadPopularGames" -->
     @forelse($popularGames as $game)
         <div class="game mt-8 w-fit">  

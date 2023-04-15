@@ -27,7 +27,7 @@ class ProfileController extends Controller
 
         $user=User::find(Auth::user()->id);
         $lists=$user->lists;
-        dump($user);
+        //dump($user);
         return view('profile.overview');
     }
 
