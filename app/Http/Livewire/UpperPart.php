@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\fav_games_table;
+use App\Models\user_lists_table;
 use App\Models\wishlist_games;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,7 @@ use Illuminate\Support\Str;
 class UpperPart extends Component
 {
     public $detailsPart=[]; 
+    public $userLists=[];
     public $slug;
     public $isFav=false;
     public $isWishList=false;
@@ -35,9 +37,12 @@ class UpperPart extends Component
                 where slug=\"{$gameSlug}\";" 
             ]
             )->json();
-       
+
+        $this->userLists=user_lists_table::where('user_id', Auth::user()->id)
+        ->get();
+        //dump($this->userLists);
          
-        //dump($this->cleanView($detailsPartCleaned[0]));
+        //to check if the game is added to fav/wishlist or not
         $temp=fav_games_table::where('user_id', Auth::user()->id)
              ->where('game_id', $detailsPartCleaned[0]['id'])
              ->first();

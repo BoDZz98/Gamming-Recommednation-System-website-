@@ -17,7 +17,7 @@
             <div class="game mt-8 bg-gray-900 p-8 rounded-xl">  
                 <div class="relative inline-block w-32">
                     @if($oneGame['similarGamesCover'])
-                        <a href="#">
+                        <a href="{{ route( 'games.show',$oneGame['slug'] ) }}">
                             <img src="{{  $oneGame['similarGamesCover'] }}" alt="Game Cover" class="rounded-lg h-44 hover:opacity-75 transition ease-in-out duration-150">
                         </a>
                     @endif
@@ -27,7 +27,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="#" class="block text-base font-semibold leading-tight hover:text-gray-400 mt-8 ">{{$oneGame['name']}}</a>
+                <a href="{{ route( 'games.show',$oneGame['slug'] ) }}" class="block text-base font-semibold leading-tight hover:text-gray-400 mt-8 ">{{$oneGame['name']}}</a>
                 <div class="text-gray-400 mt-1 ">
                     
                     {{$oneGame['similarGamesPlatforms']}}

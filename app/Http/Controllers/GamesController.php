@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\fav_games_table;
+use App\Models\list_games;
 use App\Models\user_preference;
 use App\Models\wishlist_games;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
-
+use PhpParser\Node\Stmt\Catch_;
+use PhpParser\Node\Stmt\TryCatch;
 
 class GamesController extends Controller
 {
@@ -102,7 +105,7 @@ class GamesController extends Controller
         $game=Http::withHeaders(config('services.igdb'))
             ->send('POST', 'https://api.igdb.com/v4/games?', 
             [
-                'body' => "fields screenshots.url , videos.video_id , similar_games.cover.url,similar_games.name,
+                'body' => "fields similar_games.cover.url,similar_games.name,
                 similar_games.rating , similar_games.platforms.abbreviation , similar_games.slug ;
                 where slug=\"{$slug}\";" 
             ]
@@ -173,7 +176,20 @@ class GamesController extends Controller
 
         //dump($id);
     }
-
+    public function addGameToUserList($gameId,$listId){
+        try{
+        list_games::create([
+            'list_id'=>$listId,
+            'game_id'=>$gameId,
+        ]);
+        
+        return redirect()->back()->with('sucMessage','Successfully Added to The List'); 
+        }
+    catch(Exception $e){
+        return redirect()->back()->with('errorMessage','Game Already Added To This List');
+        }
+        
+    }
     
 
 }
