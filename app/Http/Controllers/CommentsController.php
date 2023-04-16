@@ -27,10 +27,12 @@ class CommentsController extends Controller
             ]
             )->json();
         //dump($game);
+        $commentsCount=comments::where('game_id',$game[0]['id'])->count();
 
         abort_if(!$game,404); 
         return view('comments_page',[
-            'game'=>$this->cleanView($game[0])
+            'game'=>$this->cleanView($game[0]),
+            'commentsNumber' => $commentsCount
         ]);
     }
 

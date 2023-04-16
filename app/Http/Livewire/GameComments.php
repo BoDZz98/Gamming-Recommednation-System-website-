@@ -9,6 +9,7 @@ use Livewire\Component;
 class GameComments extends Component
 {
     public $gameId;
+    public $commentCount;
     public $allComments=[];
     public $emojis=['Hated it','Dislike it','it\'s ok','liked it','loved it'];
 

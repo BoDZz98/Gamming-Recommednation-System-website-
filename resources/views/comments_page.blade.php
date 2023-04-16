@@ -9,7 +9,7 @@
             </div>
             <div class="mt-10 lg:mt-0 lg:ml-12 lg:mr-64 flex flex-col space-y-8">
                 <h2 class="fone-semibold text-4xl">{{$game['name']}}</h2>
-                <h2 class="fone-semibold text-1xl">comments : 12</h2>
+                <h2 class="fone-semibold text-1xl">comments : {{$commentsNumber}}</h2>
                 <button  class=" inline-flex bg-purple-600 rounded-lg text-white  font-semibold px-4 py-4 hover:bg-purple-800 transition ease-in-out duration-150"
                 @click="addComment = true">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16"> <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"/> </svg>
@@ -40,7 +40,7 @@
             </div>    
         </div>
         <div class="my-8 bg-gray-900 rounded-3xl p-16 space-y-6">
-            @livewire('game-comments', ['gameId' => $game['id']])
+            @livewire('game-comments', ['gameId' => $game['id'],'commentCount'=>$commentsNumber])
         </div>
 
     </div>
