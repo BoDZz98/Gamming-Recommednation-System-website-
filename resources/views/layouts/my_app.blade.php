@@ -11,13 +11,8 @@
         <!-- jquery -->
         <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
         <!-- alpine js -->
-        {{-- <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.11.1/dist/cdn.min.js"></script>
 
-        <!-- select2 -->
-        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
- --}}
         
         @livewireStyles
         <title>Gamer's Guide</title>
@@ -72,33 +67,41 @@
                     @livewire('search-dropdown') 
                     <!-- Logo dropdown -->
                     <div class="ml-6">
-                        {{-- <x-dropdown align="right" width="48">
-                            <!-- The Logo itself -->
-                            <x-slot name="trigger">
+                        <div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
+                            <div @click="open = ! open">
                                 <a href="#"> <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-8"></a>
-                            </x-slot>
-                            <!-- content of dropdown -->
-                            <x-slot name="content">
-                                <x-dropdown-link :href="route('profile.index')"> <!-- route('profile.edit') -->
-                                    {{ __('My Profile') }}
-                                </x-dropdown-link>
-
-                                <x-dropdown-link :href="route('settings.index')"> 
-                                    {{ __('Settings') }}
-                                </x-dropdown-link>
-
-                                <!-- Authentication -->
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-
-                                    <x-dropdown-link :href="route('logout')"
-                                            onclick="event.preventDefault();
-                                                        this.closest('form').submit();">
-                                        {{ __('Log Out') }}
+                            </div>
+                        
+                            <div x-show="open"
+                                    x-transition:enter="transition ease-out duration-200"
+                                    x-transition:enter-start="transform opacity-0 scale-95"
+                                    x-transition:enter-end="transform opacity-100 scale-100"
+                                    x-transition:leave="transition ease-in duration-75"
+                                    x-transition:leave-start="transform opacity-100 scale-100"
+                                    x-transition:leave-end="transform opacity-0 scale-95"
+                                    class="absolute z-50 mt-2 w-48 rounded-md shadow-lg"
+                                    style="display: none;"
+                                    @click="open = false">
+                                <div class="rounded-md ring-1 ring-black ring-opacity-5 py-1 bg-white dark:bg-gray-700">
+                                    <x-dropdown-link :href="route('profile.index')"> <!-- route('profile.edit') -->
+                                        {{ __('My Profile') }}
                                     </x-dropdown-link>
-                                </form>
-                            </x-slot>
-                        </x-dropdown> --}}
+    
+                                    <x-dropdown-link :href="route('settings.index')"> 
+                                        {{ __('Settings') }}
+                                    </x-dropdown-link>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+    
+                                        <x-dropdown-link :href="route('logout')"
+                                                onclick="event.preventDefault();
+                                                            this.closest('form').submit();">
+                                            {{ __('Log Out') }}
+                                        </x-dropdown-link>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -124,9 +127,7 @@
         </footer> 
         @livewireScripts
         <script src={{ url('js/main.js')}}></script>
-        {{-- <script src="/js/app.js"></script>
-        <script src="/js/main.js"></script> 
-        @stack('scripts') --}}
+        
         
         
     </body>
