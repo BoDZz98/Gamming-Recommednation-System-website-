@@ -2,7 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\fav_games_table;
+use App\Models\wishlist_games;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -14,12 +17,10 @@ class UpperPart extends Component
 {
     public $detailsPart=[]; 
     public $slug;
+    public $isFav=false;
+    public $isWishList=false;
 
-    public function goToNextPage(){
-        
-        Log::info('clicked');
-
-    }
+   
     
     public function loadDetailsPart()
     {
@@ -37,7 +38,18 @@ class UpperPart extends Component
        
          
         //dump($this->cleanView($detailsPartCleaned[0]));
+        $temp=fav_games_table::where('user_id', Auth::user()->id)
+             ->where('game_id', $detailsPartCleaned[0]['id'])
+             ->first();
+        $temp==null?$this->isFav=false:$this->isFav=true;
+
+        $temp2=wishlist_games::where('user_id', Auth::user()->id)
+             ->where('game_id', $detailsPartCleaned[0]['id'])
+             ->first();
+        $temp2==null?$this->isWishList=false:$this->isWishList=true;
         
+        
+
         $this->detailsPart =$this->cleanView($detailsPartCleaned);
         //dump($this->detailsPart['coverImageUrl']);
         //{{$detailsPart['coverImageUrl']}}

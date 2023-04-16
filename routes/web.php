@@ -50,11 +50,15 @@ Route::redirect(uri:'/',destination:'login');
 
 Route::get('/home',[GamesController::class,'index'])->name('games.index');
 Route::get('/browse',[GamesController::class,'browse'])->name('games.browse');
-Route::post('/games',[GamesController::class,'getGames'])->name('games.getGames');
+//Route::post('/games',[GamesController::class,'getGames'])->name('games.getGames');
 Route::post('/storeUserGames',[GamesController::class,'store'])->name('games.store');
 
 Route::get('/games/{slug}',[GamesController::class,'show'])->name('games.show');
 Route::get('/category/{name}',[GamesController::class,'categoryGames'])->name('games.categoryGames');
+Route::get('/addTofav/{id}',[GamesController::class,'addGameToFavorites'])->name('games.addGameToFavorites');
+Route::get('/removeFromFav/{id}',[GamesController::class,'removeGamefromFavorites'])->name('games.removeGamefromFavorites');
+Route::get('/addToWish/{id}',[GamesController::class,'addGameToWishList'])->name('games.addGameToWishList');
+Route::get('/removeFromWish/{id}',[GamesController::class,'removeGamefromWishList'])->name('games.removeGamefromWishList');
 
 Route::get('/comments/{id}',[CommentsController::class,'index'])->name('comments.index');
 Route::post('/storeComment',[CommentsController::class,'store'])->name('comments.store');
@@ -67,6 +71,7 @@ Route::get('/profile/comments',[ProfileController::class,'comments'])->name('pro
 Route::get('/profile/lists',[ProfileController::class,'lists'])->name('profile.lists');
 
 Route::resource('list',ListController::class );
+
 
 
 Route::get('/settings',[SettingsController::class,'index'])->name('settings.index');

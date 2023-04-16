@@ -2,23 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\fav_games_table;
 use App\Models\user_preference;
+use App\Models\wishlist_games;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 
 class GamesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-
-           // dump($latestReleasesGames);
         return view('index',[
             /* 'popularGames'=>$popularGames, */
         ]);
@@ -26,9 +23,7 @@ class GamesController extends Controller
 
     public function browse()
     {
-        return view('browse',[
-            /* 'genresInfo'=>$genres */
-        ]);
+        return view('browse');
     }   
 
     
@@ -72,15 +67,6 @@ class GamesController extends Controller
         
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -148,37 +134,46 @@ class GamesController extends Controller
         return $temp;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+    public function addGameToFavorites($id){
+        fav_games_table::create([
+            'user_id'=>Auth::user()->id,
+            'game_id'=>$id,
+        ]);
+        //route( 'games.show',$game['slug'] )
+        return redirect()->back()->with('sucMessage','Successfully Added To Favorites'); 
+
+        //dump($id);
+    }
+    public function removeGamefromFavorites($id){
+        fav_games_table::where('user_id', Auth::user()->id)
+        ->where('game_id', $id)
+        ->delete();
+        //route( 'games.show',$game['slug'] )
+        return redirect()->back()->with('sucMessage','Successfully Deleted From Favorites'); 
+
+        //dump($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+    public function addGameToWishList($id){
+        wishlist_games::create([
+            'user_id'=>Auth::user()->id,
+            'game_id'=>$id,
+        ]);
+        
+        return redirect()->back()->with('sucMessage','Successfully Added To WishList'); 
+
+        //dump($id);
+    }
+    public function removeGamefromWishList($id){
+        wishlist_games::where('user_id', Auth::user()->id)
+        ->where('game_id', $id)
+        ->delete();
+        
+        return redirect()->back()->with('sucMessage','Successfully Deleted From WishList'); 
+
+        //dump($id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    
+
 }

@@ -19,6 +19,11 @@ class ListController extends Controller
         //
     }
 
+    public function tst($id)
+    {
+        dump($id);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
