@@ -5,18 +5,22 @@
         @forelse($middlePart as $game)
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-8">
             <!-- One Image -->
-            @foreach($game['screenshots'] as $oneScreenshot)
-            <div >
-                <a href="#" 
-                @click.prevent="
-                    isImageModalVisible=true
-                    image='{{  $oneScreenshot['huge'] }}'
-                "
-                >
-                    <img src="{{ $oneScreenshot['big'] }}" alt="screenshots" class="  rounded-lg hover:opacity-75 transition ease-in-out duration-150">
-                </a>
-            </div> 
-            @endforeach
+            @if(isset($game['screenshots']))
+                @foreach($game['screenshots'] as $oneScreenshot)
+                    <div >
+                        <a href="#" 
+                        @click.prevent="
+                            isImageModalVisible=true
+                            image='{{  $oneScreenshot['huge'] }}'
+                        "
+                        >
+                            <img src="{{ $oneScreenshot['big'] }}" alt="screenshots" class="  rounded-lg hover:opacity-75 transition ease-in-out duration-150">
+                        </a>
+                    </div> 
+                @endforeach
+            @else
+                No Images For This Game
+            @endif
         </div>
         <!-- Images model here -->
         <template x-if="isImageModalVisible">

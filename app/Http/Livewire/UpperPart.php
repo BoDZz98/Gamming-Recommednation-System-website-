@@ -76,16 +76,16 @@ class UpperPart extends Component
                 'first_release_date'=>isset($game['first_release_date'])?Carbon::parse ($game['first_release_date'])->format('M d,Y'):"No Release Date",
                 'trailer' => isset($game['videos'])?'https://youtube.com/embed/'.$game['videos'][0]['video_id']:null,
                 'social'=>[
-                    'website'=>collect($game['websites'])->first(),
-                    'facebook'=>collect($game['websites'])->filter(function ($website){
+                    'website'=>isset($game['websites'])?collect($game['websites'])->first():null,
+                    'facebook'=>isset($game['websites'])?collect($game['websites'])->filter(function ($website){
                         return str::contains($website['url'],'facebook');
-                    })->first(),
-                    'twitter'=>collect($game['websites'])->filter(function ($website){
+                    })->first():null,
+                    'twitter'=>isset($game['websites'])?collect($game['websites'])->filter(function ($website){
                         return str::contains($website['url'],'twitter');
-                    })->first(),
-                    'instagram'=>collect($game['websites'])->filter(function ($website){
+                    })->first():null,
+                    'instagram'=>isset($game['websites'])?collect($game['websites'])->filter(function ($website){
                         return str::contains($website['url'],'instagram');
-                    })->first(),
+                    })->first():null,
                 ]
     
                 ]);

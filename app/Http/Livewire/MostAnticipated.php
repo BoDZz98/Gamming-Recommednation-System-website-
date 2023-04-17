@@ -25,7 +25,7 @@ class MostAnticipated extends Component
             return  Http::withHeaders(config('services.igdb'))
             ->send('POST', 'https://api.igdb.com/v4/games?', 
             [
-                'body' => 'fields name , cover.url , first_release_date , platforms.abbreviation , rating , aggregated_rating;
+                'body' => 'fields name , cover.url , first_release_date , slug;
                 where category = (0,9) & platforms = (48,49)  
                 &  first_release_date < '.$after4.' &  first_release_date > '.$current.';
                 sort aggregated_rating desc;

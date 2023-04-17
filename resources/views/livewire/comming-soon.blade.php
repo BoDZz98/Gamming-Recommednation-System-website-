@@ -6,12 +6,12 @@
             <!-- Game card container for most anticpated -->
             <div class="gamecard flex  ">
                 @if(array_key_exists('cover',$oneGame))
-                <a href="#">
+                <a href="{{ route( 'games.show',$oneGame['slug'] ) }}">
                     <img src="{{ $oneGame['coverImageUrl'] }}" alt="Game Cover" class="  w-16  hover:opacity-75 transition ease-in-out duration-150">
                 </a>
                 @endif
                 <div class="ml-4">
-                    <a href="#" class="hover:text-gray-300">{{ $oneGame['name'] }}</a>
+                    <a href="{{ route( 'games.show',$oneGame['slug'] ) }}" class="hover:text-gray-300">{{ $oneGame['name'] }}</a>
                     <div class="text-gray-400 text-sm mt-1">{{ $oneGame['first_release_date'] }}</div>
                 </div>
             </div>

@@ -3,7 +3,11 @@
     <div class="game-details p-16 bg-gray-800 rounded-3xl border-b border-gray-800 flex flex-col lg:flex-row">
         
         <div class="flex-none ">
-            <img src="{{ $game['coverImageUrl'] }}" alt="game cover" class=" rounded-lg ">
+            @if(isset($game['coverImageUrl']))
+                <img src="{{ $game['coverImageUrl'] }}" alt="game cover" class=" rounded-lg ">
+            @else
+                <img src="https://via.placeholder.com/264x352" alt="Game Cover" class="rounded-lg">
+            @endif
             <p class="mt-4 rounded p-3 bg-gray-900 text-white font-semibold">{{ $game['first_release_date'] }}</p>
         </div>
         

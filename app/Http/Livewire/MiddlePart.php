@@ -36,12 +36,14 @@ class MiddlePart extends Component
     private function cleanView($games){
         return collect($games)->map(function ($game){
             return collect($game)->merge([
-                'screenshots'=>collect($game['screenshots'])->map(function($oneScreenshot){
+                'screenshots'=>isset($game['screenshots'])
+                ?collect($game['screenshots'])->map(function($oneScreenshot){
                     return [
                         'big'=>Str::replaceFirst('thumb','screenshot_big', $oneScreenshot['url']),
                         'huge'=>Str::replaceFirst('thumb','screenshot_huge', $oneScreenshot['url']),
                     ];
-                }),
+                })
+                :null,
     
                 ]);
         })->toArray();
