@@ -12,7 +12,11 @@
             <div class="text-grey-400">
                 <span>{{$game['genres']}}</span>
                 &middot;
-                <span class="text-gray-500">{{ $game['involved_companies'][0]['company']['name'] }}</span>
+                @if(isset($game['involved_companies']))
+                    <span class="text-gray-500">{{ $game['involved_companies'][0]['company']['name'] }}</span>
+                @else
+                    <span class="text-gray-500">Company Unknown</span> 
+                @endif
                 &middot;
                 <span>{{ $game['platforms'] }}</span>
             </div>
@@ -103,15 +107,20 @@
 
                 </div>
             </div>
-
-            <p class="mt-12"> {{$game['summary']}}</p>
+            @if(isset($game['summary']))
+                <p class="mt-12"> {{$game['summary']}}</p>
+            @else
+                <p class="mt-12">No Summary Available For This Game </p>
+            @endif
              
             <div class="mt-12 flex" x-data="{ isTrailerModalVisible:false }">
-                <button class="inline-flex bg-purple-600 rounded-lg text-white font-semibold px-4 py-4 hover:bg-purple-800 transition ease-in-out duration-150"
-                @click="isTrailerModalVisible = true">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16"> <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"/> </svg>
-                    <h1 class=" ml-2">Play Trailer</h1> 
-                </button>
+                @if(isset( $game['trailer']))
+                    <button class="inline-flex bg-purple-600 rounded-lg text-white font-semibold px-4 py-4 hover:bg-purple-800 transition ease-in-out duration-150"
+                    @click="isTrailerModalVisible = true">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16"> <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"/> </svg>
+                        <h1 class=" ml-2">Play Trailer</h1> 
+                    </button>
+                @endif
                 <!-- trailer model here  -->
                 <template x-if="isTrailerModalVisible">
                     <div style="background-color: rgba(0, 0, 0, .5);" class="z-50 fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto">
@@ -150,11 +159,17 @@
                     </span>
                     <div class="absolute hidden group-hover:block top-full min-w-full w-max bg-white shadow-md  rounded-lg">
                         <ul class="text-left border rounded">
-                            @foreach($userLists as $oneList)
-                            <a href="{{ route('games.addGameToUserList',[$game['id'],$oneList->list_id] )}}">
-                                <li class="px-4 py-1 text-black hover:bg-gray-100 border b">{{ $oneList->list_name }}</li>
+                            @if(count($userLists)!=0)
+                                @foreach($userLists as $oneList)
+                                <a href="{{ route('games.addGameToUserList',[$game['id'],$oneList->list_id] )}}">
+                                    <li class="px-4 py-1 text-black hover:bg-gray-100 border b">{{ $oneList->list_name }}</li>
+                                </a>
+                                @endforeach
+                            @else
+                            <a href="{{route( 'profile.lists') }}">
+                                <li class="px-4  py-1 text-black hover:bg-gray-100 border b text-sm">No Lists,Click here to Create One!</li>
                             </a>
-                            @endforeach
+                            @endif
                         </ul>
                     </div>
                 </button>

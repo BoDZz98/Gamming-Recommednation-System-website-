@@ -68,13 +68,13 @@ class UpperPart extends Component
     private function cleanView($games){
         return collect($games)->map(function ($game){
             return collect($game)->merge([
-                'coverImageUrl'=>Str::replaceFirst('thumb','cover_big', $game['cover']['url']),
+                'coverImageUrl'=>isset($game['cover'])?Str::replaceFirst('thumb','cover_big', $game['cover']['url']):null,
                 'rating'=>isset($game['rating'])?round($game['rating']).'%':'0%',
                 'aggregated_rating'=>isset($game['aggregated_rating'])?round($game['aggregated_rating']).'%':'0%',
-                'genres'=>collect($game['genres'])->pluck('name')->implode(', '),
-                'platforms'=>isset($game['platforms'])?collect($game['platforms'])->pluck('abbreviation')->implode(', '):null,
-                'first_release_date'=>Carbon::parse ($game['first_release_date'])->format('M d,Y'),
-                'trailer' => 'https://youtube.com/embed/'.$game['videos'][0]['video_id'],
+                'genres'=>isset($game['genres'])?collect($game['genres'])->pluck('name')->implode(', '):'No Genres',
+                'platforms'=>isset($game['platforms'])?collect($game['platforms'])->pluck('abbreviation')->implode(', '):'No Platforms',
+                'first_release_date'=>isset($game['first_release_date'])?Carbon::parse ($game['first_release_date'])->format('M d,Y'):"No Release Date",
+                'trailer' => isset($game['videos'])?'https://youtube.com/embed/'.$game['videos'][0]['video_id']:null,
                 'social'=>[
                     'website'=>collect($game['websites'])->first(),
                     'facebook'=>collect($game['websites'])->filter(function ($website){

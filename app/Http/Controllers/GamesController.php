@@ -146,7 +146,9 @@ class GamesController extends Controller
                 ]);
             })->take(6)
             
-        ]);}
+        ]);
+        return $temp;
+    }
         //dd($temp);
         return null;
     }
