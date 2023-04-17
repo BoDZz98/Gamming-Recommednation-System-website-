@@ -27,4 +27,35 @@
     </div>
 </div> 
 
+{{-- User preference model //////////////////////////////////////////// --}}
+
+<div x-data="{isUserModalVisible:{{$firstTime}}}">
+    {{-- @if(true)
+    isUserModalVisible=true 
+    @endif --}}
+    <div 
+    style="background-color: rgba(0, 0, 0, .5);" x-show="isUserModalVisible"
+    class="z-50 fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto"
+    >
+        <div class="container mx-auto lg:px-56  overflow-y-auto">
+            <div class=" px-8 py-8 overflow-hidden relative bg-gray-900 rounded-2xl ">
+                <div class="flex justify-end pr-4 pt-2">
+                    <button
+                        class="text-3xl leading-none text-white hover:text-gray-400"
+                        @click="isUserModalVisible = false"
+                        @keydown.escape.window="isUserModalVisible = false"
+                    >
+                        &times;
+                    </button>
+                </div>
+
+                <p class="font-extrabold text-4xl p-7  text-white flex justify-center self-center">Choose Your Favorite Games</p>
+                <div class="flex flex-col space-y-4">
+                    @livewire('user-games')   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection

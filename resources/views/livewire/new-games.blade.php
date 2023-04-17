@@ -6,7 +6,7 @@
             <!-- Image and percentage container  / left part-->
             <div class="relative flex-none ">
                 <!-- Image -->
-                <a href="#">
+                <a href="{{ route( 'games.show',$oneNewGame['slug'] ) }}">
                     <img src="{{ $oneNewGame['cover']['url'] }}" alt="Game Cover" class="h-60  w-48 hover:opacity-75 transition ease-in-out duration-150">
                 </a>
                 <!-- percentage -->
@@ -20,7 +20,7 @@
             </div>
             <!-- Game Name and details  / Right part -->
             <div class="ml-6 lg:ml-12">
-                <a href="#" class="block text-lg font-semibold leading-tight mt-4 hover:text-gray-400  ">{{ $oneNewGame['name'] }}</a>
+                <a href="{{ route( 'games.show',$oneNewGame['slug'] ) }}" class="block text-lg font-semibold leading-tight mt-4 hover:text-gray-400  ">{{ $oneNewGame['name'] }}</a>
                 <div class="text-gray-400 mt-1 "> 
                     {{$oneNewGame['platforms']}}
                 </div>

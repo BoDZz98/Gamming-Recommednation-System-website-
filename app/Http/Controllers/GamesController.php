@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\fav_games_table;
 use App\Models\list_games;
+use App\Models\User;
 use App\Models\user_preference;
 use App\Models\wishlist_games;
 use Exception;
@@ -19,7 +20,18 @@ class GamesController extends Controller
     
     public function index()
     {
+        $user=User::where('id', Auth::user()->id)->first();
+        if ($user->first_time==1) {
+            $first=true;
+            User::where('id', Auth::user()->id)
+            ->update(['first_time' => 0]);
+        }
+        else{
+            $first=false;
+        }
+      
         return view('index',[
+            'firstTime'=>$first,
             /* 'popularGames'=>$popularGames, */
         ]);
     }
@@ -120,8 +132,10 @@ class GamesController extends Controller
         ]);
     }
     private function cleanView($game){
+        if(isset($game['similar_games'])){
         $temp=collect($game)->merge([
-            'similarGames'=>collect($game['similar_games'])->map(function ($oneSimilarGame){
+            'similarGames'=>
+            collect($game['similar_games'])->map(function ($oneSimilarGame){
                 return collect($oneSimilarGame)->merge([
                     'similarGamesCover'=>isset($oneSimilarGame['cover'])?
                     Str::replaceFirst('thumb','cover_big', $oneSimilarGame['cover']['url']):
@@ -130,11 +144,11 @@ class GamesController extends Controller
                     'similarGamesPlatforms'=>isset($oneSimilarGame['platforms'])?
                     collect($oneSimilarGame['platforms'])->pluck('abbreviation')->implode(', '):null,
                 ]);
-            })->take(6),
+            })->take(6)
             
-        ]);
+        ]);}
         //dd($temp);
-        return $temp;
+        return null;
     }
 
     public function addGameToFavorites($id){

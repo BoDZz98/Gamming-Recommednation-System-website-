@@ -20,14 +20,14 @@ class NewGames extends Component
         return Http::withHeaders(config('services.igdb'))
     ->send('POST', 'https://api.igdb.com/v4/games?', 
     [
-        'body' => 'fields name , cover.url , first_release_date , platforms.abbreviation , rating , aggregated_rating,summary;
+        'body' => 'fields name , cover.url , first_release_date , platforms.abbreviation , rating , aggregated_rating,summary,slug;
         where category = (0,8,9) & platforms = (48,49) &  first_release_date < 1609689433 &  cover.url!=null;
         sort first_release_date desc;
         limit 3;'
     ]
     )->json();
     });
-    
+    //dump($this->cleanView($newGamesCleaned));
     $this->newGames=$this->cleanView($newGamesCleaned);
     }
 
