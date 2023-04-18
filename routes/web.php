@@ -19,6 +19,8 @@ use App\Http\Controllers\SettingsController;
 
     php artisan make:model small_letters_table -m
 
+    php artisan make:migration create_flights_table
+
     php artisan migrate
 
     php artisan migrate:refresh
@@ -35,13 +37,6 @@ use App\Http\Controllers\SettingsController;
 
     @livewire('upper-part' , ['slug' => $slug])
 
-    <!-- @if($game['platforms'])
-                        @foreach($oneGame['platforms'] as $platform)
-                            @if(array_key_exists('abbreviation',$platform))
-                                {{$platform['abbreviation']}},
-                            @endif
-                        @endforeach 
-                    @endif -->
 
 */
 

@@ -1,13 +1,20 @@
 <section>
     
 
-    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
+    <form id="send-verification" method="post" action="{{ route('verification.send') }}" enctype="multipart/form-data">
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-4 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
+        {{ $user->photo }}
+        <div class="flex flex-row py-2 space-x-5" >
+            <img src="{{ asset($user->photo) }}" alt="avatar" class="rounded-full w-12 "> {{-- /imgs/avatar.png --}}
+            <input type="file" name="userPhoto"class="underline text-gray-400 mt-1">
+            {{-- <a class="underline text-gray-400 mt-1" href="#">Upload</a> --}}
+        </div>
+        
         <div class="flex flex-col md:space-y-4 lg:flex-row lg:space-x-4 lg:space-y-0 ">
             <div class="w-full lg:w-1/2">
                 <x-input-label for="name" :value="__('Name')" />
@@ -40,9 +47,10 @@
             </div>
         </div>
         
-        <textarea type="text" class="w-full rounded p-3 bg-black h-36" id="bio" name="bio" value="{{ old('offer_ratio')}}" placeholder="Bio"></textarea>
+       
+        <textarea type="text" class="w-full rounded p-3 bg-black h-36" id="bio" name="bio" value="123" placeholder="Bio">{{ $user->bio}}</textarea>
         @error('bio')
-            <div class="form-error">
+            <div class="text-sm text-red-500">
                 {{ $message }}
             </div>
         @enderror

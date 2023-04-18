@@ -13,6 +13,7 @@ class SettingsController extends Controller
      */
     public function index(Request $request)
     {
+        //dd($request->user());
         return view('settings.index', [
             'user' => $request->user(),
         ]);
