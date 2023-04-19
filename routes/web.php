@@ -50,9 +50,6 @@ Route::get('/browse', [GamesController::class, 'browse'])->name('games.browse');
 Route::post('/games', [GamesController::class, 'getGames'])->name('games.getGames');
 Route::post('/storeUserGames', [GamesController::class, 'store'])->name('games.store');
 
-Route::get('/games/{slug}', [GamesController::class, 'show'])->name('games.show');
-Route::get('/category/{name}', [GamesController::class, 'categoryGames'])->name('games.categoryGames');
-
 Route::get('/games/{slug}',[GamesController::class,'show'])->name('games.show');
 Route::get('/category/{name}',[GamesController::class,'categoryGames'])->name('games.categoryGames');
 Route::get('/addTofav/{id}',[GamesController::class,'addGameToFavorites'])->name('games.addGameToFavorites');
@@ -69,22 +66,11 @@ Route::get('/profile/lists', [ProfileController::class, 'lists'])->name('profile
 
 Route::resource('list', ListController::class);
 
-Route::get('/profile/overview',[ProfileController::class,'index'])->name('profile.index');
-Route::get('/profile/favorites',[ProfileController::class,'favorites'])->name('profile.favorites');
-Route::get('/profile/wishlist',[ProfileController::class,'wishlist'])->name('profile.wishlist');
-Route::get('/profile/comments',[ProfileController::class,'comments'])->name('profile.comments');
-Route::get('/profile/lists',[ProfileController::class,'lists'])->name('profile.lists');
-
-Route::resource('list',ListController::class );
-
-
-
 Route::get('/settings',[SettingsController::class,'index'])->name('settings.index');
 Route::get('/email',[SettingsController::class,'email'])->name('settings.email');
 Route::get('/password',[SettingsController::class,'password'])->name('settings.password');
 
 
-Route::get('/tst',[SendDataController::class,'processData'])->name('tst.processData');
 
 Route::get('/tst', [SendDataController::class, 'processData'])->name('tst.processData');
 

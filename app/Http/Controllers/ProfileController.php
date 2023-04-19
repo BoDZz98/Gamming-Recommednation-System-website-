@@ -71,6 +71,7 @@ class ProfileController extends Controller
     {
        $request->validate([
              //'bio'=>'string',
+             //'image' => 'required|image|mimes:png,jpg,jpeg|max:2048'
         ]);
         $request->user()->fill($request->validated());
 

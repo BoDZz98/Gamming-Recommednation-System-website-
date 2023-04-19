@@ -33,7 +33,15 @@
                         <li class="mt-6 lg:mt-2"> <a href="#" x-on:click.prevent="isUserModalVisible2=true" class="hover:text-gray-400">Rating</a></li>
                         <li class="md:mt-4 lg:mt-0">
                             <a href="{{route( 'profile.index') }}" class="mt-6 lg:mt-0 ">
-                                <div class="flex flex-row p-2 bg-gray-700 text-gray-500 rounded-xl hover:bg-purple-500 hover:text-white transition ease-in-out duration-300"> profile <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-8 ml-3"> </div>
+                                <div class="flex flex-row p-2 bg-gray-700 text-gray-500 rounded-xl hover:bg-purple-500 hover:text-white transition ease-in-out duration-300"> profile 
+                                    @if (true){{-- isset($currentUserPhoto) --}}
+                                        <div class="flex flex-row py-2 space-x-5" >
+                                            <img src="{{ asset($currentUserPhoto) }}" alt="avatar" class="rounded-full w-12 "> 
+                                        </div>
+                                    @else
+                                        <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-12 ">
+                                    @endif
+                                </div>
                             </a>
                         </li>
                     </ul>
@@ -69,7 +77,13 @@
                     <div class="ml-6">
                         <div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
                             <div @click="open = ! open">
-                                <a href="#"> <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-8"></a>
+                                @if (true){{-- isset($currentUserPhoto) --}}
+                                    <div class="flex flex-row py-2 space-x-5" >
+                                        <img src="{{ asset($currentUserPhoto) }}" alt="avatar" class="rounded-full w-12 "> 
+                                    </div>
+                                @else
+                                    <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-12 ">
+                                @endif
                             </div>
                         
                             <div x-show="open"

@@ -11,8 +11,14 @@
         <!-- User Name and Button -->
         <div class="flex justify-between px-10 lg:px-20">
             <div class="flex flex-row">
-                <span class="text-4xl font-bold " >User name</span>
-                <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-12  ml-5">
+                <span class="text-4xl font-bold " > {{ Auth::user()->name }}</span>
+                @if (true){{-- isset($currentUserPhoto) --}}
+                    <div class="flex flex-row py-2 space-x-5" >
+                        <img src="{{ asset($currentUserPhoto) }}" alt="avatar" class="rounded-full w-12 "> 
+                    </div>
+                @else
+                    <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-12 ">
+                @endif
             </div>
             <a href="{{route( 'settings.index') }}" class=" rounded-lg py-3 px-3 h-12 font-semibold bg-purple-600 hover:bg-purple-800" >Settings</a>
         </div>
