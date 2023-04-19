@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\ModelGameController;
 use App\Models\user_preference;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
@@ -32,6 +33,9 @@ class AppServiceProvider extends ServiceProvider
 
             if($number>=10){
                 $view->with('total',10);
+                $gameCont = new ModelGameController();
+               # $gameCont->recommendations();
+                 
             }
             else{
                 $view->with('total',$number);
