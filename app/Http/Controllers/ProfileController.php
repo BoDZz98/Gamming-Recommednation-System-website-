@@ -85,7 +85,7 @@ class ProfileController extends Controller
         $oldBio=$currentUser->bio;
        
         if($request->hasFile('userPhoto')){
-            dump('in if'); 
+            //dump('in if'); 
             $photoName=time().$request->file('userPhoto')->getClientOriginalName();
             //stored in storage/app/public/userimgs
             $path=$request->file('userPhoto')->storeAs('userimgs',$photoName,'public');

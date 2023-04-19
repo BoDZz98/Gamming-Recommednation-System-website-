@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\fav_games_table;
 use App\Models\user_lists_table;
+use App\Models\user_preference;
 use App\Models\wishlist_games;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,7 @@ class UpperPart extends Component
     public $slug;
     public $isFav=false;
     public $isWishList=false;
-
+    public $userRating=0;
    
     
     public function loadDetailsPart()
@@ -37,6 +38,7 @@ class UpperPart extends Component
                 where slug=\"{$gameSlug}\";" 
             ]
             )->json();
+        //dd($detailsPartCleaned );
 
         $this->userLists=user_lists_table::where('user_id', Auth::user()->id)
         ->get();
@@ -53,7 +55,10 @@ class UpperPart extends Component
              ->first();
         $temp2==null?$this->isWishList=false:$this->isWishList=true;
         
-        
+        $this->userRating=user_preference::where('user_id', Auth::user()->id)
+        ->where('game_id', $detailsPartCleaned[0]['id'])
+        ->first();/* recommended_games */
+
 
         $this->detailsPart =$this->cleanView($detailsPartCleaned);
         //dump($this->detailsPart['coverImageUrl']);

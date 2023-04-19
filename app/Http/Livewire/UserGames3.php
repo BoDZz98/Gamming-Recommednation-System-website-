@@ -24,6 +24,10 @@ class UserGames3 extends Component
         $this->validate([
             'rating1'=>'required',
         ]);
+
+       
+           
+       
         //comment with no desc
         if($this->desc==null){
             log::info('in if');

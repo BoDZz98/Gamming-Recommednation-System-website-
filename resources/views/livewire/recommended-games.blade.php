@@ -6,10 +6,10 @@
                 <a href="{{ route( 'games.show',$game['slug'] ) }}">
                     <img src="{{ $game['coverImageUrl'] }}" alt="Game Cover" class=" h-60 rounded-lg w-44 hover:opacity-75 transition ease-in-out duration-150">
                 </a>
-                @if($game['rating'])
+                @if($userGames[$loop->index]['rating'])
                     <div class="absolute bottom-0 right-0 w-16 h-16 bg-gray-800 rounded-full" style="right: 20px; bottom: -15px;">
                         <div class="font-semibold text-xs flex justify-center items-center h-full">
-                            {{ $game['rating'] }}
+                            {{$userGames[$loop->index]['rating'] }}%
                         </div>
                     </div>
                 @endif

@@ -53,3 +53,4 @@ class AddEditList extends Component
         return view('livewire.add-edit-list');
     }
 }
+
