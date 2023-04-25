@@ -3,14 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\comments;
+use App\Models\list_games;
 use App\Models\User;
 use App\Models\user_lists_table;
+use App\Models\wishlist_games;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
+
 
 
 class ProfileController extends Controller
@@ -34,23 +40,96 @@ class ProfileController extends Controller
     }
 
     public function favorites(){
-        return view('profile.favorites');
+        $user_fav=wishlist_games::where('user_id', Auth::user()->id)->get();
+        $unCleanedGamesInfo=[];
+        $gamesInfo=[];
+
+        foreach($user_fav as $oneGame){
+            
+            $tempList =  Http::withHeaders(config('services.igdb'))
+                ->send('POST', 'https://api.igdb.com/v4/games?', 
+                [
+                    'body' => 'fields name , cover.url ,  platforms.abbreviation ,rating , aggregated_rating,slug;
+                    where id='.$oneGame->game_id .';'
+                ]
+                )->json();
+                //dd($tempList);
+            array_push($unCleanedGamesInfo,$tempList[0]);
+        }
+        $gamesInfo =$this->cleanView($unCleanedGamesInfo);
+        return view('profile.favorites',[
+            'fav_games' =>$gamesInfo,
+        ]);
     }
 
     public function wishlist()
     {
-        return view('profile.wishlist');
+        $user_wishlist=wishlist_games::where('user_id', Auth::user()->id)->get();
+        $unCleanedGamesInfo=[];
+        $gamesInfo=[];
+
+        foreach($user_wishlist as $oneGame){
+            //dd($game->game_id);
+            $tempList =  Http::withHeaders(config('services.igdb'))
+                ->send('POST', 'https://api.igdb.com/v4/games?', 
+                [
+                    'body' => 'fields name , cover.url ,  platforms.abbreviation ,rating , aggregated_rating,slug;
+                    where id='.$oneGame->game_id .';'
+                ]
+                )->json();
+                //dd($tempList);
+            array_push($unCleanedGamesInfo,$tempList[0]);
+        }
+        $gamesInfo =$this->cleanView($unCleanedGamesInfo);
+        //dd($gamesInfo);
+        return view('profile.wishlist',[
+            'wishlist_games' =>$gamesInfo,
+        ]);
     }
 
     public function comments()
     {
-        return view('profile.comments');
+        $user_comments=comments::where('user_id', Auth::user()->id)->get();
+        $unCleanedGamesInfo=[];
+        $gamesInfo=[];
+        $emojis=['Hated it','Dislike it','it\'s ok','liked it','loved it'];
+
+
+        foreach($user_comments as $oneComment){
+            //dd($game->game_id);
+            $tempList =  Http::withHeaders(config('services.igdb'))
+                ->send('POST', 'https://api.igdb.com/v4/games?', 
+                [
+                    'body' => 'fields name , cover.url , rating , aggregated_rating,slug;
+                    where id='.$oneComment->game_id .';'
+                ]
+                )->json();
+                //dd($tempList);
+            array_push($unCleanedGamesInfo,$tempList[0]);
+        }
+        $gamesInfo =$this->cleanView($unCleanedGamesInfo);
+        //dd($gamesInfo);
+        return view('profile.comments',[
+            'games' =>$gamesInfo,
+            'userComments'=> $user_comments,
+            'emojis'=>$emojis,
+        ]);
     }
 
     public function lists()
     {
-        //
-        return view('profile.lists');
+        $countList=[];
+        $user_lists=user_lists_table::where('user_id', Auth::user()->id)->get();
+        foreach ($user_lists as $one_user_list) {
+            $list_games_count=list_games::where('list_id', $one_user_list->list_id)->count();
+            array_push($countList,$list_games_count);
+        };
+        
+
+        return view('profile.lists',[
+            'userLists' => $user_lists,
+            'gamesNumber'=> $countList,
+        ]);
     }
     /**
      * Display the user's profile form.
@@ -95,7 +174,7 @@ class ProfileController extends Controller
         user::where('id', Auth::user()->id)
         ->first()
         ->update([
-            'photo' =>'/storage/'.$path,
+            'photo' =>$request->hasFile('userPhoto')?'/storage/'.$path:$path,
             'bio'=> $request->input('bio')!=null?$request->input('bio'):$oldBio,
             ]);
 
@@ -124,5 +203,15 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function cleanView($games){
+        return collect($games)->map(function($game){
+            return collect($game)->merge([
+                'coverImageUrl'=>isset($game['cover'])?Str::replaceFirst('thumb','cover_big', $game['cover']['url']):'https://via.placeholder.com/264x352',
+                'rating'=>isset($game['rating'])?round($game['rating']).'%':null,
+                'platforms'=>isset($game['platforms'])?collect($game['platforms'])->pluck('abbreviation')->implode(', '):'No Platforms',
+            ]);
+        })->toArray();
     }
 }

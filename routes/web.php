@@ -58,6 +58,9 @@ Route::get('/addToWish/{id}',[GamesController::class,'addGameToWishList'])->name
 Route::get('/removeFromWish/{id}',[GamesController::class,'removeGamefromWishList'])->name('games.removeGamefromWishList');
 Route::get('/addToUserList/{gameId}/{listId}',[GamesController::class,'addGameToUserList'])->name('games.addGameToUserList');
 
+Route::get('/comments/{id}',[CommentsController::class,'index'])->name('comments.index');
+Route::post('/storeComment',[CommentsController::class,'store'])->name('comments.store');
+
 Route::get('/profile/overview', [ProfileController::class, 'index'])->name('profile.index');
 Route::get('/profile/favorites', [ProfileController::class, 'favorites'])->name('profile.favorites');
 Route::get('/profile/wishlist', [ProfileController::class, 'wishlist'])->name('profile.wishlist');

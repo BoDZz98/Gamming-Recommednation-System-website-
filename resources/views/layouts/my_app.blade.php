@@ -36,7 +36,7 @@
                                 <div class="flex flex-row p-2 bg-gray-700 text-gray-500 rounded-xl hover:bg-purple-500 hover:text-white transition ease-in-out duration-300"> profile 
                                     @if (true){{-- isset($currentUserPhoto) --}}
                                         <div class="flex flex-row py-2 space-x-5" >
-                                            <img src="{{ asset($currentUserPhoto) }}" alt="avatar" class="rounded-full w-12 "> 
+                                            <img src="{{ asset($currentUserPhoto) }}" alt="avatar" class="rounded-full w-10 h-10 ml-2"> 
                                         </div>
                                     @else
                                         <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-12 ">
@@ -79,7 +79,7 @@
                             <div @click="open = ! open">
                                 @if (true){{-- isset($currentUserPhoto) --}}
                                     <div class="flex flex-row py-2 space-x-5" >
-                                        <img src="{{ asset($currentUserPhoto) }}" alt="avatar" class="rounded-full w-12 "> 
+                                        <img src="{{ asset($currentUserPhoto) }}" alt="avatar" class="rounded-full  w-12 h-12"> 
                                     </div>
                                 @else
                                     <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-12 ">

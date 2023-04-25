@@ -16,6 +16,7 @@
             </div>
         @else
             <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-12 ">
+            <input type="file" name="userPhoto"class="underline text-gray-400 mt-1">
         @endif
         
         
