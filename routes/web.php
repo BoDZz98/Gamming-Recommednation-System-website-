@@ -67,15 +67,12 @@ Route::get('/profile/wishlist', [ProfileController::class, 'wishlist'])->name('p
 Route::get('/profile/comments', [ProfileController::class, 'comments'])->name('profile.comments');
 Route::get('/profile/lists', [ProfileController::class, 'lists'])->name('profile.lists');
 
-Route::resource('list', ListController::class);
+Route::get('/listDetails/{id}',[ListController::class,'index'])->name('list.index');
 
 Route::get('/settings',[SettingsController::class,'index'])->name('settings.index');
 Route::get('/email',[SettingsController::class,'email'])->name('settings.email');
 Route::get('/password',[SettingsController::class,'password'])->name('settings.password');
 
-
-
-Route::get('/tst', [SendDataController::class, 'processData'])->name('tst.processData');
 
 Route::get('/dashboard', function () {
     return view('index');

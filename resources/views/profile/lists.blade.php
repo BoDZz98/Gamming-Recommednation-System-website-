@@ -30,7 +30,7 @@
                 </div>
 
                 <p class="font-extrabold text-4xl p-7  text-white flex justify-center self-center">Add Your List</p>
-                @livewire('add-edit-list')
+                @livewire('add-edit-list',['functionName'=>'submit'])
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  mb-10 gap-12">
         @foreach ($userLists as $userList )
             <!-- one list -->
-            <a href="" class="group w-52 h-72  transition ease-in-out duration-300">
+            <a href="{{ route( 'list.index',$userList['list_id'] ) }}" class="group w-52 h-72  transition ease-in-out duration-300">
                 <div class="w-52 h-72  rounded-lg bg-purple-300 px-5  ">
                     <button class="pl-32 pt-3  w-6 h-6 opacity-0 group-hover:opacity-100 transition ease-in-out duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg"  fill="red" class="bi bi-trash w-10 h-10 bg-purple-700 rounded-full p-2" viewBox="0 0 16 16">
