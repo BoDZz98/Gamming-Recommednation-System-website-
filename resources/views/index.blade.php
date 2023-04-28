@@ -2,17 +2,31 @@
 @section('content')
 <div class="container mx-auto px-4 ">
     <div class=" flex justify-center">
-        <div class="bg-[url('https://via.placeholder.com/264x352')] w-3/4 h-72 rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 p-16">
-            <p class="text-lg font-bold font-mono">Welcome to gamer's Guide</p>
-            <p class="text-3xl font-bold py-6"><span class="text-4xl font-extrabold">Browse</span> Our Popular <br>Games Now</p>
-            <a href="" class="bg-gray-900 rounded-2xl p-3 transition ease-in-out duration-300 hover:bg-purple-900 text-sm">Browse Now</a>
+        <div class="w-3/4 h-72 rounded-2xl flex flex-row bg-gradient-to-r from-violet-500 to-fuchsia-500 p-16">{{-- bg-[url('https://via.placeholder.com/264x352')]  --}}
+            <div class="flex flex-col">
+                <p class="text-lg font-bold font-mono">Welcome to gamer's Guide</p>
+                <p class="text-3xl font-bold py-6"><span class="text-4xl font-extrabold">Browse</span> Our Popular <br>Games Now</p>
+                <a href="" class="bg-gray-900 rounded-2xl p-3 transition ease-in-out duration-300 hover:bg-purple-900 text-sm">Browse Now</a>
+            </div>
+            <div>
+                <span>complete rating games</span>
+            </div>
         </div>
     </div>
     
-    <div class="bg-gray-800 rounded-3xl p-8 mt-8">
-        <span class=" uppercase underline text-2xl tracking-wide font-extrabold">Recommended</span>
-        <span class=" tracking-wide font-extrabold text-2xl text-purple-600"> Games</span>
-        @livewire('recommended-games')
+    <div class="bg-gray-800 rounded-3xl p-14 mt-8">
+        @if ($recGamesNumber==0)
+        <div class=" w-full h-fit mr-0 lg:basis-3/4 lg:mr-32 bg-gray-900 rounded-xl px-20 pt-5">
+            <span class=" uppercase underline text-2xl tracking-wide font-extrabold">Popular</span>
+            <span class=" tracking-wide font-extrabold text-2xl text-purple-600"> Games</span>
+            @livewire('popular-games')   
+        </div>
+        @else
+            <span class=" uppercase underline text-2xl tracking-wide font-extrabold">Recommended</span>
+            <span class=" tracking-wide font-extrabold text-2xl text-purple-600"> Games</span>
+            @livewire('recommended-games')
+        @endif
+        
     </div>
     <!-- Next section is recently reviewed and most anticpeted. -->
     <div class="flex flex-col lg:flex-row my-10 ">

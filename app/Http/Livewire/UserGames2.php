@@ -36,7 +36,6 @@ class UserGames2 extends Component
     }
 
      public function increment(){ 
-        Log::info('in skip'.$this->currentGame); 
         $this->currentGame++;
         $this->tempPopularGames=$this->popularGames[$this->currentGame];
         $this->game1=$this->tempPopularGames['id'];
@@ -44,7 +43,6 @@ class UserGames2 extends Component
         $temp=user_preference::where('user_id', Auth::user()->id)
              ->where('game_id', $this->game1)->first();
         if($temp!=null){
-            Log::info('already exist'.$this->currentGame. '//' .$this->game1); 
             $this->increment();
         }
         else{

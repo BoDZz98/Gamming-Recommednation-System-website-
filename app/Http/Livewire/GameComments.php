@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
@@ -13,6 +15,8 @@ class GameComments extends Component
     public $allComments=[];
     public $emojis=['Hated it','Dislike it','it\'s ok','liked it','loved it'];
 
+    public $currentUserPhoto;
+
     public function loadComments(){
         $this->allComments=DB::table('comments')
         ->join('users','comments.user_id','=','users.id')
@@ -21,10 +25,13 @@ class GameComments extends Component
         ->where('game_id','=',$this->gameId)
         ->get();
         //dd($this->allComments);
+                
+        $currentUser=User::where('id', Auth::user()->id)
+        ->first();
+        $this->currentUserPhoto=$currentUser->photo;
     }
     public function render()
     {
-        Log::info($this->gameId);
         return view('livewire.game-comments');
     }
 }

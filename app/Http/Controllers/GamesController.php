@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\fav_games_table;
 use App\Models\list_games;
+use App\Models\recommended_games;
 use App\Models\User;
 use App\Models\user_preference;
 use App\Models\wishlist_games;
@@ -29,10 +30,12 @@ class GamesController extends Controller
         else{
             $first=false;
         }
+        $rec_games_number=recommended_games::where('user_id', Auth::user()->id)->count();
       
         return view('index',[
             'firstTime'=>$first,
-            /* 'popularGames'=>$popularGames, */
+            'recGamesNumber'=>$rec_games_number,
+            
         ]);
     }
 

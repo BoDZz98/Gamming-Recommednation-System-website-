@@ -5,9 +5,9 @@
             <div class="gamecard bg-gray-800 rounded-xl shadow-md flex px-6 py-6 lg:w-3/4">
                 <div class="relative flex-none ">
                     <!-- Image -->
-                    <a href="#">
-                        <img  alt="user Cover" class="h-60  w-48 hover:opacity-75 transition ease-in-out duration-150">
-                    </a>
+                    
+                    <img  src="{{ asset($currentUserPhoto) }}" alt="user Cover" class="h-48 w-48 rounded-full">
+                    
                 </div>
                 <!-- Game Name and details  / Right part -->
                 <div class="ml-6 lg:ml-12">
