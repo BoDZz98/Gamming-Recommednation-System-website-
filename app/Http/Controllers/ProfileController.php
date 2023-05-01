@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\comments;
+use App\Models\fav_games_table;
 use App\Models\list_games;
 use App\Models\User;
 use App\Models\user_lists_table;
@@ -40,7 +41,7 @@ class ProfileController extends Controller
     }
 
     public function favorites(){
-        $user_fav=wishlist_games::where('user_id', Auth::user()->id)->get();
+        $user_fav=fav_games_table::where('user_id', Auth::user()->id)->get();
         $unCleanedGamesInfo=[];
         $gamesInfo=[];
 
