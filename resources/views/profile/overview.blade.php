@@ -4,21 +4,21 @@
 <p class="text-2xl tracking-wide text-purple-500 font-extrabold p-7 ">Overview</p>
 <div class="px-12 lg:px-32">
     <div class=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-10">{{-- bg-red-500 --}}
-        <a href="#">
+        <a href="/profile/favorites">
             <div class="w-52 h-72  rounded-lg bg-purple-300 px-5 pt-52">
                 <p class="text-lg font-semibold underline">FAVORITE GAMES</p>
                 <p class="text-s">Games: 12</p>
             </div>
         </a>    
 
-        <a href="#">
+        <a href="/profile/wishlist">
             <div class="w-52 h-72  rounded-lg bg-purple-300 px-5 pt-52">
                 <p class="text-lg font-semibold underline">WISHLIST</p>
                 <p class="text-s">Games: 12</p>
             </div>
         </a> 
 
-        <a href="#">
+        <a href="/profile/lists">
             <div class="w-52 h-72  rounded-lg bg-purple-300 px-5 pt-52">
                 <p class="text-lg font-semibold underline">COLLECTIONS :</p>
                 <p class="text-s">12</p>
