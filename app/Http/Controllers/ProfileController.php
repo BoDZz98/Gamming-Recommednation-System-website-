@@ -33,11 +33,76 @@ class ProfileController extends Controller
             'list_image_path' => '0',
             
         ]); */
+        $user_comments=comments::where('user_id', Auth::user()->id)
+        ->latest()
+        ->limit(2)
+        ->get();
+        
+        $unCleanedGamesInfo=[];
+        $gamesInfo=[];
+        $emojis=['Hated it','Dislike it','it\'s ok','liked it','loved it'];
 
+
+        foreach($user_comments as $oneComment){
+            //dd($game->game_id);
+            $tempList1 =  Http::withHeaders(config('services.igdb'))
+                ->send('POST', 'https://api.igdb.com/v4/games?', 
+                [
+                    'body' => 'fields name , cover.url , rating , aggregated_rating,slug;
+                    where id='.$oneComment->game_id .';'
+                ]
+                )->json();
+                //dd($tempList);
+            array_push($unCleanedGamesInfo,$tempList1[0]);
+        }
+        $gamesInfo =$this->cleanView($unCleanedGamesInfo);
+        //dd($gamesInfo);
         $user=User::find(Auth::user()->id);
         $lists=$user->lists;
+        //____________________________________________________________________________
+        //____________________________________________________________________________
+        $user_fav_num=fav_games_table::where('user_id', Auth::user()->id)->count();
+        $user_fav=fav_games_table::where('user_id', Auth::user()->id)
+        ->latest()
+        ->first();
+        $gamesInfo2=[];
+            $tempList2 =  Http::withHeaders(config('services.igdb'))
+                ->send('POST', 'https://api.igdb.com/v4/games?', 
+                [
+                    'body' => 'fields  cover.url ;
+                    where id='.$user_fav->game_id .';'
+                ]
+                )->json();
+          #  array_push($unCleanedGamesInfo,$tempList[0]);
+        $gamesInfo2 =$this->cleanView($tempList2);
         //dump($user);
-        return view('profile.overview');
+        //____________________________________________________________________________
+        //____________________________________________________________________________
+        
+        $wish_games_num=wishlist_games::where('user_id', Auth::user()->id)->count();
+        $user_wish=wishlist_games::where('user_id', Auth::user()->id)
+        ->latest()
+        ->first();
+        $gamesInfo3=[];
+            $tempList3 =  Http::withHeaders(config('services.igdb'))
+                ->send('POST', 'https://api.igdb.com/v4/games?', 
+                [
+                    'body' => 'fields  cover.url ;
+                    where id='.$user_wish->game_id .';'
+                ]
+                )->json();
+                $gamesInfo3 =$this->cleanView($tempList3);
+        
+
+        return view('profile.overview',[
+        'games' =>$gamesInfo,
+        'games_fav'=>$gamesInfo2[0],
+        'games_wish'=>$gamesInfo3[0],
+        'userComments'=> $user_comments,
+        'emojis'=>$emojis,
+        'fav_games_num'=>$user_fav_num,
+        'wish_games_num'=>$wish_games_num,
+    ]);
     }
 
     public function favorites(){
@@ -63,6 +128,7 @@ class ProfileController extends Controller
         ]);
     }
 
+
     public function wishlist()
     {
         $user_wishlist=wishlist_games::where('user_id', Auth::user()->id)->get();
@@ -85,6 +151,30 @@ class ProfileController extends Controller
         //dd($gamesInfo);
         return view('profile.wishlist',[
             'wishlist_games' =>$gamesInfo,
+        ]);
+    }
+
+    public function wishlist_games_pagecover(){
+        $user_fav=wishlist_games::where('user_id', Auth::user()->id)->get();
+        $unCleanedGamesInfo=[];
+        $gamesInfo=[];
+
+        foreach($user_fav as $oneGame){
+            
+            $tempList =  Http::withHeaders(config('services.igdb'))
+                ->send('POST', 'https://api.igdb.com/v4/games?', 
+                [
+                    'body' => 'fields name , cover.url ,  platforms.abbreviation ,rating , aggregated_rating,slug;
+                    where id='.$oneGame->game_id .';'
+                ]
+                )->json();
+                //dd($tempList);
+            array_push($unCleanedGamesInfo,$tempList[0]);
+            break;
+        }
+        $gamesInfo =$this->cleanView($unCleanedGamesInfo);
+        return view('profile.favorites',[
+            'wishlist_games_test' =>$gamesInfo,
         ]);
     }
 
