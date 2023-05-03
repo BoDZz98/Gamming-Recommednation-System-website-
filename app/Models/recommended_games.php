@@ -9,6 +9,7 @@ class recommended_games extends Model
 {
     use HasFactory;
 
+
     protected $fillable = [
         'user_id',
         'game_id',
