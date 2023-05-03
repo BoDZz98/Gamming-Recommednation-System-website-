@@ -20,7 +20,7 @@ class RecommendedGames extends Component
     public function loadRecommendedGames()
     {
 
-        $this->userGames=user_preference::where('user_id', Auth::user()->id)->limit(12)->get();/* recommended_games */
+        $this->userGames=recommended_games::where('user_id', Auth::user()->id)->orderBy('rating', 'desc')->limit(12)->get();/* recommended_games */
         //dd($games);
         $unCleanedRecommendedGames=[];
 

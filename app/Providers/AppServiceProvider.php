@@ -30,10 +30,15 @@ class AppServiceProvider extends ServiceProvider
         
             //view()->share('bodzation', 100);
         try {
-            view()->composer(['index','layouts.my_app','layouts.profile'],function ($view){
+            view()->composer(['index','layouts.my_app','layouts.profile','settings.index'],function ($view){
                 $number = user_preference::where('user_id',Auth::user()->id)->count();
                 $currentUser=User::where('id', Auth::user()->id)
                 ->first();
+               
+                if ($currentUser->photo=="") {
+                    
+                    $currentUser->photo='/imgs/avatar.png';
+                }
                 $view->with('currentUserPhoto',$currentUser->photo);
                 //dd($currentUser->photo);
                 

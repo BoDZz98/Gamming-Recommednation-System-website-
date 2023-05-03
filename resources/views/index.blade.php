@@ -2,14 +2,15 @@
 @section('content')
 <div class="container mx-auto px-4 ">
     <div class=" flex justify-center">
-        <div class="w-3/4 h-72 rounded-2xl flex flex-row bg-gradient-to-r from-violet-500 to-fuchsia-500 p-16">{{-- bg-[url('https://via.placeholder.com/264x352')]  --}}
+        <div class="w-3/4 h-72 rounded-2xl flex flex-row justify-around bg-gradient-to-r from-violet-500 to-fuchsia-500 p-16">{{-- bg-[url('https://via.placeholder.com/264x352')]  --}}
             <div class="flex flex-col">
                 <p class="text-lg font-bold font-mono">Welcome to gamer's Guide</p>
                 <p class="text-3xl font-bold py-6"><span class="text-4xl font-extrabold">Browse</span> Our Popular <br>Games Now</p>
-                <a href="" class="bg-gray-900 rounded-2xl p-3 transition ease-in-out duration-300 hover:bg-purple-900 text-sm">Browse Now</a>
+                <a href="{{route( 'games.browse') }}" class="w-32 bg-gray-900 rounded-2xl p-3 transition ease-in-out duration-300 hover:bg-purple-900 text-sm">Browse Now</a>
             </div>
-            <div>
-                <span>complete rating games</span>
+            <div class="flex flex-col my-14">
+                <p class="text-3xl font-bold "><span class="text-4xl font-extrabold">Complete</span> Rating Games </p>
+                <p class="py-4 flex justify-center text-xl text-black font-bold">Games Rated: {{$total}}/10</p>
             </div>
         </div>
     </div>

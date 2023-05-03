@@ -8,17 +8,12 @@
     <form method="post" action="{{ route('profile.update') }}" class="mt-4 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
-        @if (isset($user->photo))
-            <div class="flex flex-row py-2 space-x-5" >
-                <img src="{{ asset($user->photo) }}" alt="avatar" class="rounded-full w-12 "> 
-                <input type="file" name="userPhoto"class="underline text-gray-400 mt-1">
-                {{-- <a class="underline text-gray-400 mt-1" href="#">Upload</a> --}}
-            </div>
-        @else
-            <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-12 ">
+
+        <div class="flex flex-row py-2 space-x-5" >
+            <img src="{{ asset($currentUserPhoto) }}" alt="avatar" class="rounded-full w-12 "> 
             <input type="file" name="userPhoto"class="underline text-gray-400 mt-1">
-        @endif
-        
+            {{-- <a class="underline text-gray-400 mt-1" href="#">Upload</a> --}}
+        </div>
         
         <div class="flex flex-col md:space-y-4 lg:flex-row lg:space-x-4 lg:space-y-0 ">
             <div class="w-full lg:w-1/2">

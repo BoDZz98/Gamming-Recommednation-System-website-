@@ -34,13 +34,9 @@
                         <li class="md:mt-4 lg:mt-0">
                             <a href="{{route( 'profile.index') }}" class="mt-6 lg:mt-0 ">
                                 <div class="flex flex-row p-2 bg-gray-700 text-gray-500 rounded-xl hover:bg-purple-500 hover:text-white transition ease-in-out duration-300"> profile 
-                                    @if (true){{-- isset($currentUserPhoto) --}}
-                                        <div class="flex flex-row py-2 space-x-5" >
-                                            <img src="{{ asset($currentUserPhoto) }}" alt="avatar" class="rounded-full w-10 h-10 ml-2"> 
-                                        </div>
-                                    @else
-                                        <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-12 ">
-                                    @endif
+                                    <div class="flex flex-row py-2 space-x-5" >
+                                        <img src="{{ asset($currentUserPhoto) }}" alt="avatar" class="rounded-full w-10 h-10 ml-2"> 
+                                    </div>
                                 </div>
                             </a>
                         </li>
@@ -77,14 +73,10 @@
                     <div class="ml-6">
                         <div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
                             <div @click="open = ! open">
-                                @if (true){{-- isset($currentUserPhoto) --}}
-                                    <div class="flex flex-row py-2 space-x-5" >
-                                        <img src="{{ asset($currentUserPhoto) }}" alt="avatar" class="rounded-full  w-12 h-12"> 
-                                    </div>
-                                @else
-                                    <img src="/imgs/avatar.png" alt="avatar" class="rounded-full w-12 ">
-                                @endif
-                            </div>
+                                <div class="flex flex-row py-2 space-x-5" >
+                                    <img src="{{ asset($currentUserPhoto) }}" alt="avatar" class="rounded-full  w-12 h-12"> 
+                                </div>
+                           </div>
                         
                             <div x-show="open"
                                     x-transition:enter="transition ease-out duration-200"
