@@ -57,9 +57,6 @@ class ProfileController extends Controller
         }
         $gamesInfo =$this->cleanView($unCleanedGamesInfo);
         //dd($gamesInfo);
-        $user=User::find(Auth::user()->id);
-        $lists=$user->lists;
-        //____________________________________________________________________________
         //____________________________________________________________________________
         $user_fav_num=fav_games_table::where('user_id', Auth::user()->id)->count();
         $user_fav=fav_games_table::where('user_id', Auth::user()->id)
@@ -75,10 +72,8 @@ class ProfileController extends Controller
                 )->json();
           #  array_push($unCleanedGamesInfo,$tempList[0]);
         $gamesInfo2 =$this->cleanView($tempList2);
-        //dump($user);
-        //____________________________________________________________________________
-        //____________________________________________________________________________
         
+        //____________________________________________________________________________
         $wish_games_num=wishlist_games::where('user_id', Auth::user()->id)->count();
         $user_wish=wishlist_games::where('user_id', Auth::user()->id)
         ->latest()
@@ -92,7 +87,11 @@ class ProfileController extends Controller
                 ]
                 )->json();
                 $gamesInfo3 =$this->cleanView($tempList3);
-        
+        //____________________________________________________________________________
+        $list_num=user_lists_table::where('user_id', Auth::user()->id)->count();
+        $list_info=user_lists_table::where('user_id', Auth::user()->id)->latest()
+        ->first();
+
 
         return view('profile.overview',[
         'games' =>$gamesInfo,
@@ -102,6 +101,8 @@ class ProfileController extends Controller
         'emojis'=>$emojis,
         'fav_games_num'=>$user_fav_num,
         'wish_games_num'=>$wish_games_num,
+        'list_num'=>$list_num,
+        'list_photo'=>$list_info->list_image_path
     ]);
     }
 

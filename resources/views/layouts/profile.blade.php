@@ -12,7 +12,7 @@
         <div class="flex justify-between px-10 lg:px-20">
             <div class="flex flex-row">
                 <span class="text-4xl font-bold mt-2" > {{ Auth::user()->name }}</span>
-                @if (true){{-- isset($currentUserPhoto) --}}
+                @if (isset($currentUserPhoto)){{-- isset($currentUserPhoto) --}}
                     <div class="flex flex-row py-2 space-x-5" >
                         <img src="{{ asset($currentUserPhoto) }}" alt="avatar" class="rounded-full w-12 h-12 ml-2"> 
                     </div>

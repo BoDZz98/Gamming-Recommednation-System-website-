@@ -5,7 +5,7 @@
 <div class="px-12 lg:px-32">
     <div class=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-10">{{-- bg-red-500 --}}
         <a href="/profile/favorites">
-            <div class="w-52 h-78  rounded-lg bg-purple-300 px-5 pt-3">
+            <div class="w-52 h-78  rounded-lg bg-gray-800 px-5 pt-3">
                 <img  alt="Game Cover" src="{{$games_fav['coverImageUrl']}}" class="h-60  w-48 hover:opacity-75 transition ease-in-out duration-150 rounded">
 
                 <p class="text-lg font-semibold underline">FAVORITE GAMES</p>
@@ -14,7 +14,7 @@
         </a>    
 
         <a href="/profile/wishlist">
-            <div class="w-52 h-78  rounded-lg bg-purple-300 px-5 pt-3">
+            <div class="w-52 h-78  rounded-lg bg-gray-800 px-5 pt-3">
             <img  alt="Game Cover" src="{{$games_wish['coverImageUrl']}}" class="h-60  w-48 hover:opacity-75 transition ease-in-out duration-150 rounded">
 
                 <p class="text-lg font-semibold underline">WISHLIST</p>
@@ -23,9 +23,11 @@
         </a> 
 
         <a href="/profile/lists">
-            <div class="w-52 h-78  rounded-lg bg-purple-300 px-5 pt-3">
+            <div class="w-52 h-78  rounded-lg bg-gray-800 px-5 pt-3">
+                <img src="{{ $list_photo }}" alt="game cover" class=" h-60  w-48 hover:opacity-75 transition ease-in-out duration-150 rounded">
+
                 <p class="text-lg font-semibold underline">COLLECTIONS :</p>
-                <p class="text-s">12</p>
+                <p class="text-s">Lists: {{ $list_num }}</p>
             </div>
         </a> 
     </div>
