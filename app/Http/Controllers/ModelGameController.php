@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\recommended_games;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 
 use GuzzleHttp\Client;
 
@@ -11,8 +13,7 @@ class ModelGameController extends Controller
 {
     public function recommendations()
       {  
-        $id=5;
-        //  $id= Auth::user()->id;
+        $id= Auth::user()->id;
         $client = new Client();
         dump($id);
             
@@ -35,33 +36,29 @@ class ModelGameController extends Controller
             ],
         ]);
 
-        $recommendations = json_decode($response->getBody(), true);
-         foreach ($recommendations['recommendations'] as $game_id => $rating) {
-                 recommended_games::create([
-                    'user_id' => $id,
-                    'game_id' => $game_id,
-                    'rating' => $rating,
-                ]);
-            }
+ $recommendations = json_decode($response->getBody(), true);
+foreach ($recommendations as $game_id => $rating) {
+    // Check if the record exists in the table
+    $existingRecord = DB::table('recommended_games')
+                        ->where('user_id', $id)
+                        ->where('game_id', $game_id)
+                        ->first();
+
+    if ($existingRecord) {
+        // Update the existing record
+        DB::table('recommended_games')
+            ->where('user_id', $id)
+            ->where('game_id', $game_id)
+            ->update(['rating' => $rating]);
+    } else {
+        // Create a new record
+        DB::table('recommended_games')->insert([
+            'user_id' => $id,
+            'game_id' => $game_id,
+            'rating' => $rating,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }
-// $temp=user_preference::where('user_id', Auth::user()->id)
-//              ->where('game_id', $this->gameInput)->first();
-//              //if he didn't rate this game yet
-//              if($temp==null){
-//                 user_preference::create([
-//                     'user_id'=>Auth::user()->id,
-//                     'game_id'=>$this->gameInput,
-//                     'rating'=>$this->rating1,
-//                 ]);
-//                 return redirect()->route('comments.index',$this->gameId )->with('sucMessage','Successfully rated this game'); 
-
-//             }
-//             //updating the old rating
-//             else{
-//                 user_preference::where('user_id', Auth::user()->id)
-//                 ->where('game_id', $this->gameInput)
-//                 ->update(['rating' => $this->rating1]);
-                
-//                 return redirect()->route('comments.index',$this->gameId )->with('sucMessage','Rating updated successfully'); 
-//             }
+      }}

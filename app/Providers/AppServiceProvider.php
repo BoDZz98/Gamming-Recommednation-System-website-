@@ -36,28 +36,26 @@ class AppServiceProvider extends ServiceProvider
                 ->first();
                
                 if ($currentUser->photo=="") {
-                    
                     $currentUser->photo='/imgs/avatar.png';
                 }
                 $view->with('currentUserPhoto',$currentUser->photo);
                 //dd($currentUser->photo);
                 
-                if($number>=10){
-                    $view->with('total',10); 
+                if($number>=10&& $number%5==0){
+                    $number+=1;
+                    $view->with('total',10);
+                    $gameCont = new ModelGameController();
+                    $gameCont->recommendations();
                 }
                 else{
                     $view->with('total',$number);
                 }
-                //dd($allmodels);
-                //$view->with('total',$allmodels[1]->game_id);
-                if($number>=10&& $number%5==0){
-                    $number+=1;
-                    
-                }
+                
             });
         } catch (\Exception $e) {
             return $e->getMessage();
         }
+        
         
     }
 }
