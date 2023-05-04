@@ -45,9 +45,6 @@
 {{-- User preference model //////////////////////////////////////////// --}}
 
 <div x-data="{isUserModalVisible:{{$firstTime}}}">
-    {{-- @if(true)
-    isUserModalVisible=true 
-    @endif --}}
     <div 
     style="background-color: rgba(0, 0, 0, .5);" x-show="isUserModalVisible"
     class="z-50 fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto"

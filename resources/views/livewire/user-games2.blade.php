@@ -12,8 +12,8 @@
         @endforeach
         {{-- Rating Emojis --}}
         <x-user-preference.all-emoji name='rating1' 
-            isActive='isActive' isActive2='isActive2' isActive3='isActive3' isActive4='isActive4' isActive5='isActive5'
-            id='star' id2='star2' id3='star3' id4='star4' id5='star5' 
+            isActive='isActive1' isActive2='isActive12' isActive3='isActive13' isActive4='isActive14' isActive5='isActive15'
+            id='star1' id2='star12' id3='star13' id4='star14' id5='star15' 
         />
     </div>
     {{-- Buttons Div --}}
