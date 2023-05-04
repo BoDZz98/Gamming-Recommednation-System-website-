@@ -34,14 +34,13 @@ class AppServiceProvider extends ServiceProvider
                 $number = user_preference::where('user_id',Auth::user()->id)->count();
                 $currentUser=User::where('id', Auth::user()->id)
                 ->first();
-               
                 if ($currentUser->photo=="") {
                     $currentUser->photo='/imgs/avatar.png';
                 }
                 $view->with('currentUserPhoto',$currentUser->photo);
                 //dd($currentUser->photo);
                 
-                if($number>=10&& $number%5==0){
+                if($number>=10){
                     $number+=1;
                     $view->with('total',10);
                     $gameCont = new ModelGameController();

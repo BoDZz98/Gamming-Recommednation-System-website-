@@ -15,13 +15,13 @@ class ModelGameController extends Controller
       {  
         $id= Auth::user()->id;
         $client = new Client();
-        dump($id);
-            
+       # $id = 5;
+
         $retrainUrl = 'http://127.0.0.1:5000/retrain';
         $retrainResponse = $client->post($retrainUrl);
 
         // Check if retrain was successful
-        dump(json_decode($retrainResponse->getBody(), true));
+        #dump(json_decode($retrainResponse->getBody(), true));
         if (json_decode($retrainResponse->getBody(), true)['message'] !== "Model retrained successfully") {
             // Handle retrain error
             return response('Error: Retraining model failed.', 500);
@@ -37,12 +37,12 @@ class ModelGameController extends Controller
         ]);
 
  $recommendations = json_decode($response->getBody(), true);
-foreach ($recommendations as $game_id => $rating) {
+        foreach ($recommendations as $game_id => $rating) {
     // Check if the record exists in the table
-    $existingRecord = DB::table('recommended_games')
-                        ->where('user_id', $id)
-                        ->where('game_id', $game_id)
-                        ->first();
+        $existingRecord = DB::table('recommended_games')
+                             ->where('user_id', $id)
+                             ->where('game_id', $game_id)
+                             ->first();
 
     if ($existingRecord) {
         // Update the existing record
