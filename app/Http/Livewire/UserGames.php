@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 use App\Models\user_preference;
 use Carbon\Carbon;
+use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
@@ -68,22 +70,32 @@ class UserGames extends Component
     }
 
     public function submit(){
+        
+        
         $rules=collect($this->validationRules)->collapse()->toArray(); //Make it an array without the keys[1,2,3,4,5]
         $this->validate($rules);        
         $arrGames=[$this->game1,$this->game2,$this->game3,$this->game4,$this->game5];
         $arrRating=[$this->rating1,$this->rating2,$this->rating3,$this->rating4,$this->rating5];
         for ($i=0; $i < 5; $i++) { 
-            user_preference::create([
-                'user_id'=>'8',
-                'game_id'=>$arrGames[$i],
-                'rating'=>$arrRating[$i],
-            ]);
+            try{
+                user_preference::create([
+                    'user_id'=>Auth::user()->id,
+                    'game_id'=>$arrGames[$i],
+                    'rating'=>$arrRating[$i],
+                ]);
+            }catch (Exception $e) {
+                //Log::info('in catch'.$i);
+                continue;
+                
+            }
         };
+        return redirect()->route('games.index' )->with('sucMessage',' Rating Was Successfully Added'); 
+
     }
 
     public function render()
     {  
-        Log::info('This is some useful information.');
+        // Log::info('This is some useful information.');
         return view('livewire.user-games');
     }
 
@@ -97,7 +109,7 @@ class UserGames extends Component
              Http::withHeaders(config('services.igdb'))
             ->send('POST', 'https://api.igdb.com/v4/games?', 
             [
-                'body' => 'fields name , cover.url , first_release_date , platforms.abbreviation , rating , aggregated_rating,slug;
+                'body' => 'fields name , cover.url ;
                 where category = (0,9) & platforms = (48)  & rating>95 
                 &  first_release_date < '.$after.';
                 sort rating desc;
@@ -114,8 +126,7 @@ class UserGames extends Component
         return collect($games)->map(function($game){
             return collect($game)->merge([
                 'coverImageUrl'=>Str::replaceFirst('thumb','cover_big', $game['cover']['url']),
-                'rating'=>isset($game['rating'])?round($game['rating']).'%':null,
-                'platforms'=>collect($game['platforms'])->pluck('abbreviation')->implode(', ')
+                
             ]);
         })->toArray();
     }

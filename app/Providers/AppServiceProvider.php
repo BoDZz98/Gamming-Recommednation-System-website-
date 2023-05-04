@@ -47,10 +47,9 @@ class AppServiceProvider extends ServiceProvider
                 else{
                     $view->with('total',$number);
                 }
-                if($number>=10&& $number%5==0){
-                    /* $number+=1;
+                if($number>=10){
                     $gameCont = new ModelGameController();
-                    $gameCont->recommendations(); */
+                    $gameCont->recommendations();
                 }
                 
             });
