@@ -41,13 +41,16 @@ class AppServiceProvider extends ServiceProvider
                 //dd($currentUser->photo);
                 
                 if($number>=10){
-                    $number+=1;
                     $view->with('total',10);
-                    $gameCont = new ModelGameController();
-                    $gameCont->recommendations();
+                    
                 }
                 else{
                     $view->with('total',$number);
+                }
+                if($number>=10&& $number%5==0){
+                    /* $number+=1;
+                    $gameCont = new ModelGameController();
+                    $gameCont->recommendations(); */
                 }
                 
             });
