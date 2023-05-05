@@ -63,6 +63,7 @@ class ProfileController extends Controller
         ->latest()
         ->first();
         $gamesInfo2=[];
+        if ($user_fav!=null) {
             $tempList2 =  Http::withHeaders(config('services.igdb'))
                 ->send('POST', 'https://api.igdb.com/v4/games?', 
                 [
@@ -70,8 +71,11 @@ class ProfileController extends Controller
                     where id='.$user_fav->game_id .';'
                 ]
                 )->json();
-          #  array_push($unCleanedGamesInfo,$tempList[0]);
-        $gamesInfo2 =$this->cleanView($tempList2);
+            $gamesInfo2 =$this->cleanView($tempList2);
+        }else{
+            $gamesInfo2=[1];
+        }
+            
         
         //____________________________________________________________________________
         $wish_games_num=wishlist_games::where('user_id', Auth::user()->id)->count();
@@ -79,14 +83,19 @@ class ProfileController extends Controller
         ->latest()
         ->first();
         $gamesInfo3=[];
+        if ($user_wish!=null) {
             $tempList3 =  Http::withHeaders(config('services.igdb'))
-                ->send('POST', 'https://api.igdb.com/v4/games?', 
-                [
-                    'body' => 'fields  cover.url ;
-                    where id='.$user_wish->game_id .';'
-                ]
-                )->json();
-                $gamesInfo3 =$this->cleanView($tempList3);
+            ->send('POST', 'https://api.igdb.com/v4/games?', 
+            [
+                'body' => 'fields  cover.url ;
+                where id='.$user_wish->game_id .';'
+            ]
+            )->json();
+            $gamesInfo3 =$this->cleanView($tempList3);
+        }else{
+            $gamesInfo3=[1];
+        }
+            
         //____________________________________________________________________________
         $list_num=user_lists_table::where('user_id', Auth::user()->id)->count();
         $list_info=user_lists_table::where('user_id', Auth::user()->id)->latest()
@@ -102,7 +111,7 @@ class ProfileController extends Controller
         'fav_games_num'=>$user_fav_num,
         'wish_games_num'=>$wish_games_num,
         'list_num'=>$list_num,
-        'list_photo'=>$list_info->list_image_path
+        'list_photo'=>isset($list_info->list_image_path)?$list_info->list_image_path:1,
     ]);
     }
 

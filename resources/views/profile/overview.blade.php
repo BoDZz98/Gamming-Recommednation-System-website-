@@ -6,7 +6,9 @@
     <div class=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-10">{{-- bg-red-500 --}}
         <a href="/profile/favorites">
             <div class="w-52 h-78  rounded-lg bg-gray-800 px-5 pt-3">
-                <img  alt="Game Cover" src="{{$games_fav['coverImageUrl']}}" class="h-60  w-48 hover:opacity-75 transition ease-in-out duration-150 rounded">
+                @if (isset($games_fav['coverImageUrl']))
+                    <img  alt="Game Cover" src="{{$games_fav['coverImageUrl']}}" class="h-60  w-48 hover:opacity-75 transition ease-in-out duration-150 rounded">                    
+                @endif
 
                 <p class="text-lg font-semibold underline">FAVORITE GAMES</p>
                 <p class="text-s">Games: {{$fav_games_num}}</p>
@@ -15,7 +17,9 @@
 
         <a href="/profile/wishlist">
             <div class="w-52 h-78  rounded-lg bg-gray-800 px-5 pt-3">
-            <img  alt="Game Cover" src="{{$games_wish['coverImageUrl']}}" class="h-60  w-48 hover:opacity-75 transition ease-in-out duration-150 rounded">
+                @if (isset($games_wish['coverImageUrl']))
+                    <img  alt="Game Cover" src="{{$games_wish['coverImageUrl']}}" class="h-60  w-48 hover:opacity-75 transition ease-in-out duration-150 rounded">                    
+                @endif
 
                 <p class="text-lg font-semibold underline">WISHLIST</p>
                 <p class="text-s">Games: {{$wish_games_num}}</p>
@@ -24,7 +28,9 @@
 
         <a href="/profile/lists">
             <div class="w-52 h-78  rounded-lg bg-gray-800 px-5 pt-3">
-                <img src="{{ $list_photo }}" alt="game cover" class=" h-60  w-48 hover:opacity-75 transition ease-in-out duration-150 rounded">
+                @if ($list_photo!=1)
+                    <img src="{{ $list_photo }}" alt="game cover" class=" h-60  w-48 hover:opacity-75 transition ease-in-out duration-150 rounded">
+                @endif
 
                 <p class="text-lg font-semibold underline">COLLECTIONS :</p>
                 <p class="text-s">Lists: {{ $list_num }}</p>
@@ -36,7 +42,9 @@
 <div class="p-7 border-t-2 border-gray-800 space-y-7">
     <span class=" uppercase underline text-2xl tracking-wide font-extrabold">Recently</span>
     <span class=" tracking-wide font-extrabold text-2xl text-purple-600"> Commented</span>
-
+    @if (count($userComments)==0)
+       <h1 class="mt-4 text-lg font-semibold">No Comments To Show Yet!</h1> 
+    @endif
     @foreach ($userComments as $oneUserComment )
         <div class="gamecard bg-gray-800 rounded-xl shadow-md flex px-6 py-6 ">
             <div class="relative flex-none ">

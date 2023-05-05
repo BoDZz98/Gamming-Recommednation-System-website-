@@ -48,8 +48,8 @@ class AppServiceProvider extends ServiceProvider
                     $view->with('total',$number);
                 }
                 if($number>=10){
-                    $gameCont = new ModelGameController();
-                    $gameCont->recommendations();
+                    /* $gameCont = new ModelGameController();
+                    $gameCont->recommendations(); */
                 }
                 
             });
