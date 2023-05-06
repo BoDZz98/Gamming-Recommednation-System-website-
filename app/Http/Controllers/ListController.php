@@ -7,6 +7,7 @@ use App\Models\list_games;
 use App\Models\user_lists_table;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
@@ -45,31 +46,18 @@ class ListController extends Controller
         ]);
     }
 
-
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    /* public function store(Request $request)
+    public function destroy($id)
     {
-        $request->validate([
-            'list_name'=>'required',
-            'list_description'=>'required'
-        ]);
-        user_lists_table::create([
-            'list_id'=>rand(),
-            'user_id' => Auth::user()->id,
-            'list_name' => $request->input('list_name'),
-            'list_description' => $request->input('list_description'),
-            'list_image_path' => '0',
-        ]);
-        return redirect()->route('profile.lists')->with('sucMessage','Successfully Added This List'); 
+        $deleteListGames=DB::table('list_games')
+        ->where('list_id','=',$id)
+        ->delete();
 
-    } */
+        $deleteList=DB::table('user_lists')
+        ->where('list_id','=',$id)
+        ->delete();
 
+        return redirect()->route( 'profile.lists' )->with('sucMessage','List Deleted Successfully');
+    }
    
     public function cleanView($games){
         return collect($games)->map(function($game){

@@ -68,6 +68,8 @@ Route::get('/profile/comments', [ProfileController::class, 'comments'])->name('p
 Route::get('/profile/lists', [ProfileController::class, 'lists'])->name('profile.lists');
 
 Route::get('/listDetails/{id}',[ListController::class,'index'])->name('list.index');
+route::delete('listDelete/{id}',[ListController::class,'destroy'])->name('list.destroy');
+
 
 Route::get('/settings',[SettingsController::class,'index'])->name('settings.index');
 Route::get('/email',[SettingsController::class,'email'])->name('settings.email');
