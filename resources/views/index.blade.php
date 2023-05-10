@@ -32,8 +32,8 @@
     <!-- Next section is recently reviewed and most anticpeted. -->
     <div class="flex flex-col lg:flex-row my-10 ">
         <div class="recently-reviewed w-full mr-0 lg:w-3/4 lg:mr-32">
-        <span class=" uppercase underline text-2xl tracking-wide font-extrabold">Recently </span>
-        <span class=" tracking-wide font-extrabold text-2xl text-purple-600"> Reviewed</span>
+        <span class=" uppercase underline text-2xl tracking-wide font-extrabold">Latest </span>
+        <span class=" tracking-wide font-extrabold text-2xl text-purple-600"> Releases</span>
             @livewire('new-games')     
         </div>
         <div class="most-anticipated mt-12 lg:w-1/4 lg:mt-0">

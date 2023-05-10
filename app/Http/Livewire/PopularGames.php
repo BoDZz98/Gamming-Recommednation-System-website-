@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class PopularGames extends Component
@@ -17,21 +18,24 @@ class PopularGames extends Component
     {
         $after=Carbon::now()->addMonth(2)->timestamp;
 
-        $popularGamesCleaned  = Cache::remember('popular-games', 60, function () use($after){
-            return Http::withHeaders(config('services.igdb'))
-            ->send('POST', 'https://api.igdb.com/v4/games?', 
-            [
-                'body' => 'fields name , cover.url , first_release_date , platforms.abbreviation , rating , aggregated_rating,slug;
-                where category = (0,9) & platforms = (48)  & aggregated_rating>85 
-                &  first_release_date < '.$after.';
-                sort aggregated_rating desc;
-                limit 8;'
-            ]
-            )->json();
-        });
-         
-        //dump($this->cleanView($popularGamesCleaned));
-        $this->popularGames =$this->cleanView($popularGamesCleaned);
+        
+            $popularGamesCleaned  = Cache::remember('popular-games', 60, function () use($after){
+                return Http::withHeaders(config('services.igdb'))
+                ->send('POST', 'https://api.igdb.com/v4/games?', 
+                [
+                    'body' => 'fields name , cover.url , first_release_date , platforms.abbreviation , rating , aggregated_rating,slug;
+                    where category = (0,9) & platforms =( 48,167) & total_rating>90 & total_rating_count>100 &  cover.url!=null;
+                    sort total_rating desc;
+                    limit 9;'
+                ]
+                )->json();
+            });
+            
+            //dump($this->cleanView($popularGamesCleaned));
+            //Cache::put('myFunctionResult2', $this->cleanView($popularGamesCleaned), now()->addDay());
+            $this->popularGames =$this->cleanView($popularGamesCleaned);
+        
+        
     }
 
     public function render()

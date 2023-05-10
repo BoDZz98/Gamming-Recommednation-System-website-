@@ -18,7 +18,7 @@ class CommingSoon extends Component
        
         $current=Carbon::now()->timestamp;
 
-        $commingSoonGamesCleaned  = Cache::remember('comming-soon', 120, function () use($current){
+        $commingSoonGamesCleaned  = Cache::remember('comming-soon', 600, function () use($current){
             return  Http::withHeaders(config('services.igdb'))
             ->send('POST', 'https://api.igdb.com/v4/games?', 
             [
@@ -38,7 +38,7 @@ class CommingSoon extends Component
     public function cleanView($games){
         return collect($games)->map(function($game){
             return collect($game)->merge([
-                'coverImageUrl'=>isset($game['cover'])?Str::replaceFirst('thumb','cover_small', $game['cover']['url']):null,
+                'coverImageUrl'=>isset($game['cover'])?Str::replaceFirst('thumb','cover_big', $game['cover']['url']):null,
                 'first_release_date'=>Carbon::parse ($game['first_release_date'])->format('M d,Y'),
             ]);
         })->toArray();

@@ -7,6 +7,9 @@ use App\Models\User;
 use App\Models\user_preference;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Log;
+
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+             
     }
 
     /**
@@ -47,10 +50,10 @@ class AppServiceProvider extends ServiceProvider
                 else{
                     $view->with('total',$number);
                 }
-                if($number>=10){
-                    /* $gameCont = new ModelGameController();
-                    $gameCont->recommendations(); */
-                }
+                /* if($number>=10){
+                    $gameCont = new ModelGameController();
+                    $gameCont->recommendations();
+                } */
                 
             });
         } catch (\Exception $e) {

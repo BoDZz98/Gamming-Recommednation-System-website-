@@ -11,7 +11,9 @@ use App\Models\wishlist_games;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use PhpParser\Node\Stmt\Catch_;
 use PhpParser\Node\Stmt\TryCatch;
@@ -31,6 +33,22 @@ class GamesController extends Controller
             $first=false;
         }
         $rec_games_number=recommended_games::where('user_id', Auth::user()->id)->count();
+        if(Cache::has('bool') ){
+            Log::info("in cache");
+            //dd('in');
+           
+        } 
+        else{
+        $number = user_preference::where('user_id',Auth::user()->id)->count();
+        $any=false;
+        if($number>=10){
+            Log::info("model runned");
+            Cache::put('bool',$any, now()->addMinutes(10));
+            $gameCont = new ModelGameController();
+            $gameCont->recommendations();
+        }
+    }
+
       
         return view('index',[
             'firstTime'=>$first,

@@ -16,13 +16,13 @@ class NewGames extends Component
     public function loadNewGames()
     {
     
-    $newGamesCleaned =Cache::remember('new-games',120,function(){
+    $newGamesCleaned =Cache::remember('new-games',600,function(){
         return Http::withHeaders(config('services.igdb'))
     ->send('POST', 'https://api.igdb.com/v4/games?', 
     [
         'body' => 'fields name , cover.url , first_release_date , platforms.abbreviation , rating , aggregated_rating,summary,slug;
-        where category = (0,8,9) & platforms = (48,49) &  first_release_date < 1609689433 &  cover.url!=null;
-        sort first_release_date desc;
+        where platforms =(6,48,167,169) &first_release_date >1651735982 &hypes>20 &  total_rating_count>30 & cover.url!=null;
+        sort total_rating desc;
         limit 3;'
     ]
     )->json();

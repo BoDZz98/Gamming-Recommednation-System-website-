@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
@@ -19,11 +20,17 @@ class RecommendedGames extends Component
 
     public function loadRecommendedGames()
     {
-
+        if(Cache::has('rec-games') && Cache::has('user-games')){
+            //Log::info("in here");
+            //dd('in');
+            $this->userGames=Cache::get('user-games');
+            return $this->recommendedGames= Cache::get('rec-games');
+        }
+            
         $this->userGames=recommended_games::where('user_id', Auth::user()->id)->orderBy('rating', 'desc')->limit(12)->get();/* recommended_games */
-        //dd($games);
-        $unCleanedRecommendedGames=[];
+        Cache::put('user-games', $this->userGames, now()->addMinutes(10));
 
+        $unCleanedRecommendedGames=[];
         foreach($this->userGames as $game){
             //dd($game->game_id);
             $tempList =  Http::withHeaders(config('services.igdb'))
@@ -35,14 +42,10 @@ class RecommendedGames extends Component
                 )->json();
                 //dd($tempList);
             array_push($unCleanedRecommendedGames,$tempList[0]);
-        }
-        //dd($games[0]->rating);
-        
-       
-         
-        //dump($this->cleanView($popularGamesCleaned));
+        }    
 
         $this->recommendedGames =$this->cleanView($unCleanedRecommendedGames);
+        Cache::put('rec-games', $this->recommendedGames, now()->addMinutes(10));
     }
     public function render()
     {
