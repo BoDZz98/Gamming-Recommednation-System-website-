@@ -18,22 +18,25 @@ class PopularGames extends Component
     {
         $after=Carbon::now()->addMonth(2)->timestamp;
 
+        if(Cache::has('pop-games')){       
+            return $this->popularGames= Cache::get('pop-games');
+        }
         
-            $popularGamesCleaned  = Cache::remember('popular-games', 60, function () use($after){
-                return Http::withHeaders(config('services.igdb'))
-                ->send('POST', 'https://api.igdb.com/v4/games?', 
-                [
-                    'body' => 'fields name , cover.url , first_release_date , platforms.abbreviation , rating , aggregated_rating,slug;
-                    where category = (0,9) & platforms =( 48,167) & total_rating>90 & total_rating_count>100 &  cover.url!=null;
-                    sort total_rating desc;
-                    limit 9;'
-                ]
-                )->json();
-            });
-            
-            //dump($this->cleanView($popularGamesCleaned));
-            //Cache::put('myFunctionResult2', $this->cleanView($popularGamesCleaned), now()->addDay());
-            $this->popularGames =$this->cleanView($popularGamesCleaned);
+        $popularGamesCleaned  = Http::withHeaders(config('services.igdb'))
+            ->send('POST', 'https://api.igdb.com/v4/games?', 
+            [
+                'body' => 'fields name , cover.url , first_release_date , platforms.abbreviation , rating , aggregated_rating,slug;
+                where category = (0,9) & platforms =( 48,167) & total_rating>90 & total_rating_count>100 &  cover.url!=null;
+                sort total_rating desc;
+                limit 9;'
+            ]
+            )->json();
+        
+        
+        //dump($this->cleanView($popularGamesCleaned));
+        //Cache::put('myFunctionResult2', $this->cleanView($popularGamesCleaned), now()->addDay());
+        $this->popularGames =$this->cleanView($popularGamesCleaned);
+        Cache::put('pop-games',$this->popularGames, now()->addMinutes(1));
         
         
     }

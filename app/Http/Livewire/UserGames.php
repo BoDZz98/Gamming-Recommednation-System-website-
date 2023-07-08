@@ -6,6 +6,7 @@ use App\Models\user_preference;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
@@ -104,22 +105,26 @@ class UserGames extends Component
     public function loadPopularGames()
     {
         $after=Carbon::now()->addMonth(2)->timestamp;
-
+        if(Cache::has('user-preference')){       
+            return $this->popularGames= Cache::get('user-preference');
+        }
         $popularGamesCleaned  = 
              Http::withHeaders(config('services.igdb'))
             ->send('POST', 'https://api.igdb.com/v4/games?', 
             [
-                'body' => 'fields name , cover.url ;
-                where category = (0,9) & platforms = (48)  & rating>95 
-                &  first_release_date < '.$after.';
-                sort rating desc;
-                limit 10;'
+                'body' => 'fields name , cover.url , first_release_date , platforms.abbreviation , rating , aggregated_rating,slug;
+                where category = (0,9) & platforms =( 48,167) & total_rating>90 & total_rating_count>100 &  cover.url!=null;
+                sort total_rating desc;
+                limit 9;'
             ]
             )->json();
         
          
         //dump($this->cleanView($popularGamesCleaned));
         $this->popularGames =$this->cleanView($popularGamesCleaned);
+        Cache::put('user-preference',$this->popularGames, now()->addMinutes(5));
+
+        
     }
 
     public function cleanView($games){
